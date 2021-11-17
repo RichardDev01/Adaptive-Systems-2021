@@ -3,16 +3,6 @@
 import numpy as np
 
 
-class Action(int):
-    """All possible action available as datatype."""
-
-    UP = 0
-    RIGHT = 1
-    DOWN = 2
-    LEFT = 3
-    STAY = 4
-
-
 class Maze:
     """Class file for the maze as environment."""
 

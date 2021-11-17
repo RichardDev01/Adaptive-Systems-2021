@@ -2,7 +2,7 @@
 
 from policy import Policy
 from typing import List
-from maze import Action
+from action import Action
 import numpy as np
 
 

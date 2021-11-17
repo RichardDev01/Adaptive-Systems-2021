@@ -3,7 +3,7 @@ import abc
 from typing import List
 
 
-class BasePolicy(metaclass=abc.ABCMeta):
+class Policy(metaclass=abc.ABCMeta):
     """Most generic agent class with fill in template."""
 
     @abc.abstractmethod

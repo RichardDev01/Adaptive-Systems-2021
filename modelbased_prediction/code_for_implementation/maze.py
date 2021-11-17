@@ -27,6 +27,7 @@ class Maze:
         pass
 
     def __str__(self):
+        """Return for debugging."""
         return f"{self.maze=}\n" \
                f"{self.agent=}\n" \
                f"{self.start_coord=}\n" \

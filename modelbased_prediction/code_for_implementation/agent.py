@@ -4,9 +4,9 @@
 class Agent:
     """Agent class itself."""
 
-    def __init__(self):
+    def __init__(self, policy):
         """Initialize agent with values."""
-        pass
+        self.policy = policy
 
     def interpret_world(self):
         """Process the world."""
@@ -15,3 +15,6 @@ class Agent:
     def value_function(self):
         """Calculate value of observation."""
         pass
+
+    def __str__(self):
+        return f"{self.policy=}\n" \

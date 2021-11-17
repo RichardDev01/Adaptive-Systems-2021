@@ -13,7 +13,7 @@ class Maze:
 
     def __init__(self, agent, start_coord=(0, 0), end_coord=(3, 3)):
         """Create maze with initial values."""
-        self.maze = np.array((4, 4))
+        self.maze = np.zeros((4, 4))
         self.agent = agent
         self.start_coord = start_coord
         self.end_coord = end_coord

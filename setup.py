@@ -21,7 +21,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=install_requires,
     extras_require=extras,
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     keyword=['Reinforcement Learning', 'schoolwork'],
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

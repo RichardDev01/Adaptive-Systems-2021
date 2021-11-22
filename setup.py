@@ -3,6 +3,7 @@ import setuptools
 install_requires = [
     'numpy',
     'opencv-python',
+    'Pillow',
 ]
 
 extras = {

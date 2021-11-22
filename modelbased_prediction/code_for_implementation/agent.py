@@ -16,8 +16,8 @@ class Agent:
         """Calculate value of observation."""
         pass
 
-    def get_action_from_policy(self):
-        return self.policy.decide_action([])
+    def get_action_from_policy(self, observation):
+        return self.policy.decide_action(self, observation)
 
     def __str__(self):
         return f"{self.policy=}\n" \

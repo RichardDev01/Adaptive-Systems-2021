@@ -11,4 +11,4 @@ class PureRandomPolicy(Policy):
 
     def decide_action(self, observation):
         """Decide action based on pure random."""
-        return np.random.choice([Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT, Action.STAY])
+        return np.random.choice([Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT])

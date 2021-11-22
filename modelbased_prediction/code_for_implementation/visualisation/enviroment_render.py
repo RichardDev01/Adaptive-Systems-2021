@@ -9,6 +9,7 @@ textures_path = Path(__file__) / '..' / 'textures'
 
 def render_background(environment):
     path = Image.open(textures_path / "dirt.png")
+    exit_s = Image.open(textures_path / "objective_marker.png")
 
     # Get width and height of the images
     tile_size_width, tile_size_height = path.size
@@ -36,6 +37,9 @@ def render_background(environment):
         for index, rewards in enumerate(width_values):
             ImageDraw.Draw(background).text((index * tile_size_width + tile_size_width /4, height_row * tile_size_height + tile_size_height /2), f"R ={rewards}")
 
+    for exit in environment.end_coord:
+        background.paste(exit_s, (exit[0] * tile_size_width + tile_size_width // 8, exit[1] * tile_size_height + tile_size_height // 8), exit_s)
+
     return background
 
 
@@ -52,12 +56,22 @@ def render_in_step(environment):
     # Get width and height of the images
     tile_size_width, tile_size_height = agent_icon.size
 
-    # Loop through values from the maze and determine layout
-    for height_row, width_values in enumerate(environment.occupied_map):
-        for index, occupation_value in enumerate(width_values):
-            if occupation_value > 0:
-                copy_background.paste(agent_icon, (index * tile_size_width, height_row * tile_size_height), agent_icon)
+    # # Loop through values from the maze and determine layout
+    # for height_row, width_values in enumerate(environment.occupied_map):
+    #     for index, occupation_value in enumerate(width_values):
+    #         if occupation_value > 0:
+    #             copy_background.paste(agent_icon, (index * tile_size_width, height_row * tile_size_height), agent_icon)
 
-    ImageDraw.Draw(copy_background).text((5, 0), f"Time: {environment.sim_step}")
-    ImageDraw.Draw(copy_background).text((environment.rendered_background.width - 2*tile_width, 0), f"Last action: {environment.last_action_agent}")
+    copy_background.paste(agent_icon, (environment.agent_location[0] * tile_size_width, environment.agent_location[1] * tile_size_height), agent_icon)
+
+
+    ImageDraw.Draw(copy_background).text((5, 0), f"Time: {environment.sim_step}\nReward: {environment.total_reward}")
+
+    action_to_string_dict = {0: 'up',
+                             1: 'right',
+                             2: 'down',
+                             3: 'left',
+                             4: 'stay'}
+
+    ImageDraw.Draw(copy_background).text((environment.rendered_background.width - 2*tile_width, 0), f"Last action: {action_to_string_dict[environment.last_action_agent]}")
     return copy_background

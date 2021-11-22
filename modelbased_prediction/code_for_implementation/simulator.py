@@ -18,17 +18,15 @@ if __name__ == "__main__":
     done = False
     total_reward = 0
 
-    wait_key = 250
+    wait_key = 100
     window_name = 'Adaptive systems sim'
 
     observation = environment.get_state()
-    print(observation)
+    # print(observation)
 
     while not done:
         # For every agent, decide an action according to the observation
         action = a1.get_action_from_policy(observation)
-
-        print(f"{action=}")
 
         observation, reward, done, info = environment.step(action)
 
@@ -51,3 +49,5 @@ if __name__ == "__main__":
     if environment.visualize:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
+    print(f"{reward=}\ntime={environment.sim_step}")

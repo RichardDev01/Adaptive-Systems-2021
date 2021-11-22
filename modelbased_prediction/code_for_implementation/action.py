@@ -8,4 +8,4 @@ class Action(int):
     RIGHT = 1
     DOWN = 2
     LEFT = 3
-    STAY = 4
+    # STAY = 4

@@ -6,14 +6,13 @@ import numpy as np
 class Maze:
     """Class file for the maze as environment."""
 
-    r_finish = 100          # Reward for finishing the maze
-    r_move = -10            # Reward for moving a space
-    r_backtracked = -5      # Reward for moving back over discovered path # TODO
-    r_invalid_move = -20    # Reward for invalid move
-
     def __init__(self, agent, start_coord=(0, 0), end_coord=(3, 3)):
         """Create maze with initial values."""
         self.maze = np.zeros((4, 4))
+        self.reward_map = np.array([[-1, -1, -1, 40],
+                                    [-1, -1, -10, -10],
+                                    [-1, -1, -1, -1],
+                                    [10, -2, -1, -1]])
         self.visited_places_map = np.zeros((4, 4))
         self.agent = agent
         self.start_coord = start_coord

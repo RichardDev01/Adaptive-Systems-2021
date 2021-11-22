@@ -1,7 +1,6 @@
 """Pure random policy class."""
 
 from policy import Policy
-from typing import List
 from action import Action
 import numpy as np
 

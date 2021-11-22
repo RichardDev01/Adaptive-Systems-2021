@@ -8,6 +8,13 @@ textures_path = Path(__file__) / '..' / 'textures'
 
 
 def render_background(environment):
+    """
+    Render background used for the simluation.
+
+    :param environment: The environment given to render
+    :return: Background as pillow image
+    """
+    # Loading textures in
     path = Image.open(textures_path / "dirt.png")
     exit_s = Image.open(textures_path / "objective_marker.png")
 
@@ -35,15 +42,21 @@ def render_background(environment):
     # Loop through values from the maze and determine reward table
     for height_row, width_values in enumerate(environment.reward_map):
         for index, rewards in enumerate(width_values):
-            ImageDraw.Draw(background).text((index * tile_size_width + tile_size_width /4, height_row * tile_size_height + tile_size_height /2), f"R ={rewards}")
+            ImageDraw.Draw(background).text((index * tile_size_width + tile_size_width / 4,
+                                             height_row * tile_size_height + tile_size_height / 2),
+                                            f"R ={rewards}")
 
-    for exit in environment.end_coord:
-        background.paste(exit_s, (exit[0] * tile_size_width + tile_size_width // 8, exit[1] * tile_size_height + tile_size_height // 8), exit_s)
+    for exit_maze in environment.end_coord:
+        background.paste(exit_s,
+                         (exit_maze[0] * tile_size_width + tile_size_width // 8,
+                          exit_maze[1] * tile_size_height + tile_size_height // 8),
+                         exit_s)
 
     return background
 
 
 def render_in_step(environment):
+    """Render the things that needs to be updated every step."""
     # Copy from background
     copy_background = environment.rendered_background.copy()
     # Declare with images used for the agent
@@ -51,7 +64,7 @@ def render_in_step(environment):
 
     # Calculate canvas size of the maze
     tile_width = environment.rendered_background.width // environment.maze.shape[0]
-    tile_height = environment.rendered_background.height // environment.maze.shape[1]
+    # tile_height = environment.rendered_background.height // environment.maze.shape[1]
 
     # Get width and height of the images
     tile_size_width, tile_size_height = agent_icon.size
@@ -62,8 +75,8 @@ def render_in_step(environment):
     #         if occupation_value > 0:
     #             copy_background.paste(agent_icon, (index * tile_size_width, height_row * tile_size_height), agent_icon)
 
-    copy_background.paste(agent_icon, (environment.agent_location[0] * tile_size_width, environment.agent_location[1] * tile_size_height), agent_icon)
-
+    copy_background.paste(agent_icon, (
+        environment.agent_location[0] * tile_size_width, environment.agent_location[1] * tile_size_height), agent_icon)
 
     ImageDraw.Draw(copy_background).text((5, 0), f"Time: {environment.sim_step}\nReward: {environment.total_reward}")
 
@@ -73,5 +86,6 @@ def render_in_step(environment):
                              3: 'left',
                              4: 'stay'}
 
-    ImageDraw.Draw(copy_background).text((environment.rendered_background.width - 2*tile_width, 0), f"Last action: {action_to_string_dict[environment.last_action_agent]}")
+    ImageDraw.Draw(copy_background).text((environment.rendered_background.width - 2 * tile_width, 0),
+                                         f"Last action: {action_to_string_dict[environment.last_action_agent]}")
     return copy_background

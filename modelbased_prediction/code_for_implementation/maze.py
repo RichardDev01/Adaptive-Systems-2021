@@ -7,7 +7,7 @@ from visualisation.enviroment_render import render_background, render_in_step
 class Maze:
     """Class file for the maze as environment."""
 
-    def __init__(self, agent, start_coord=(0, 0), end_coords=[(0, 3),(3, 0)], visualize=False, done=False):
+    def __init__(self, agent, start_coord=(0, 0), end_coords=[(0, 3), (3, 0)], visualize=False, done=False):
         """Create maze with initial values."""
         self.maze = np.zeros((4, 4))
         self.reward_map = np.array([[-1, -1, -1, 40],
@@ -54,7 +54,7 @@ class Maze:
         next_y = self.agent_location[0] + action_coord_delta_y
         next_x = self.agent_location[1] + action_coord_delta_x
 
-        if 0 <= next_y <= self.maze.shape[1]-1 and 0 <= next_x <= self.maze.shape[0]-1:
+        if 0 <= next_y <= self.maze.shape[1] - 1 and 0 <= next_x <= self.maze.shape[0] - 1:
             self.agent_location = (next_y, next_x)
 
         reward = self.reward_map[self.agent_location]
@@ -71,6 +71,7 @@ class Maze:
                 "maze_map": self.maze}
 
     def render(self):
+        """Render function for visualizing the maze."""
         return render_in_step(self)
 
     def __str__(self):

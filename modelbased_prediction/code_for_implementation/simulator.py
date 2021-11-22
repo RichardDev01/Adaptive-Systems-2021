@@ -3,7 +3,6 @@
 import cv2
 
 import numpy as np
-from PIL import Image
 from maze import Maze
 from policy_random import PureRandomPolicy
 from agent import Agent
@@ -14,7 +13,6 @@ if __name__ == "__main__":
 
     environment = Maze(a1, visualize=True)
 
-    # print(environment)
     done = False
     total_reward = 0
 
@@ -22,7 +20,6 @@ if __name__ == "__main__":
     window_name = 'Adaptive systems sim'
 
     observation = environment.get_state()
-    # print(observation)
 
     while not done:
         # For every agent, decide an action according to the observation

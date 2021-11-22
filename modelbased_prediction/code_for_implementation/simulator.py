@@ -8,21 +8,24 @@ from policy_random import PureRandomPolicy
 from agent import Agent
 
 if __name__ == "__main__":
+    # Creating environment
     policy = PureRandomPolicy
     a1 = Agent(policy)
-
     environment = Maze(a1, visualize=True)
 
+    # Creating variables that keep track of the simulation
     done = False
     total_reward = 0
 
+    # Visualisation variables
     wait_key = 100
     window_name = 'Adaptive systems sim'
 
+    # Get first observation for loop
     observation = environment.get_state()
 
     while not done:
-        # For every agent, decide an action according to the observation
+        # Decide an action according to the observation
         action = a1.get_action_from_policy(observation)
 
         observation, reward, done, info = environment.step(action)

@@ -17,6 +17,7 @@ class Agent:
         pass
 
     def get_action_from_policy(self, observation):
+        """Get action from policy."""
         return self.policy.decide_action(self, observation)
 
     def __str__(self):

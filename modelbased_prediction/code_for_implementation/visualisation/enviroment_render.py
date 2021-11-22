@@ -46,6 +46,7 @@ def render_background(environment):
                                              height_row * tile_size_height + tile_size_height / 2),
                                             f"R ={rewards}")
 
+    # Render exit of the maze with different marker
     for exit_maze in environment.end_coord:
         background.paste(exit_s,
                          (exit_maze[0] * tile_size_width + tile_size_width // 8,
@@ -75,11 +76,14 @@ def render_in_step(environment):
     #         if occupation_value > 0:
     #             copy_background.paste(agent_icon, (index * tile_size_width, height_row * tile_size_height), agent_icon)
 
+    # Draw location of the agent in the maze
     copy_background.paste(agent_icon, (
         environment.agent_location[0] * tile_size_width, environment.agent_location[1] * tile_size_height), agent_icon)
 
+    # Draw current step and reword on the screen
     ImageDraw.Draw(copy_background).text((5, 0), f"Time: {environment.sim_step}\nReward: {environment.total_reward}")
 
+    # Translate action to text and write to screen
     action_to_string_dict = {0: 'up',
                              1: 'right',
                              2: 'down',

@@ -14,7 +14,7 @@ class Maze:
                                     [-1, -1, -10, -10],
                                     [-1, -1, -1, -1],
                                     [10, -2, -1, -1]])
-        self.occupied_map = np.zeros((4, 4))
+        # self.occupied_map = np.zeros((4, 4)) # This can be used later if we want to have obstacles or QOL rendering
         self.agent = agent
         self.start_coord = start_coord
         self.end_coord = end_coords
@@ -22,13 +22,9 @@ class Maze:
         # self.occupied_map[start_coord] = 1  # Agent occupation
 
         self.agent_location = start_coord
-
         self.done = done
-
         self.sim_step = 0
-
         self.last_action_agent = None
-
         self.visualize = visualize
         if self.visualize:
             self.rendered_background = render_background(self)
@@ -39,10 +35,10 @@ class Maze:
     def step(self, action):
         """Step function used for playing out decided actions."""
         observation = self.get_state()
-
         self.sim_step += 1
         self.last_action_agent = action
 
+        # Translate data class to coordinates
         translate_action_to_coord = {0: (-1, 0),
                                      1: (0, 1),
                                      2: (1, 0),
@@ -54,12 +50,15 @@ class Maze:
         next_y = self.agent_location[0] + action_coord_delta_y
         next_x = self.agent_location[1] + action_coord_delta_x
 
+        # Check if next action is possible in the maze
         if 0 <= next_y <= self.maze.shape[1] - 1 and 0 <= next_x <= self.maze.shape[0] - 1:
             self.agent_location = (next_y, next_x)
 
+        # Calculate rewards
         reward = self.reward_map[self.agent_location]
         self.total_reward += reward
 
+        # check if end of sim
         if self.agent_location in self.end_coord:
             self.done = True
 
@@ -67,8 +66,7 @@ class Maze:
 
     def get_state(self):
         """State function for returning the world as a state to a policy."""
-        return {"occupied_map": self.occupied_map,
-                "maze_map": self.maze}
+        return {"agent_location": self.agent_location}
 
     def render(self):
         """Render function for visualizing the maze."""

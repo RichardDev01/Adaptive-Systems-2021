@@ -3,11 +3,13 @@
 import numpy as np
 from visualisation.enviroment_render import render_background, render_in_step
 
+import copy
+
 
 class Maze:
     """Class file for the maze as environment."""
 
-    def __init__(self, agent, start_coord=(0, 0), end_coords=[(0, 3), (3, 0)], visualize=False, done=False):
+    def __init__(self, agent, start_coord=(3, 3), end_coords=[(0, 3), (3, 0)], visualize=False, done=False):
         """Create maze with initial values."""
         self.maze = np.zeros((4, 4))
         self.reward_map = np.array([[-1, -1, -1, 40],
@@ -32,9 +34,12 @@ class Maze:
             self.rendered_background = None
         self.total_reward = 0
 
+        # Give agent copy of env for value function
+        self.agent.env = copy.copy(self)
+
     def step(self, action):
         """Step function used for playing out decided actions."""
-        observation = self.get_state()
+
         self.sim_step += 1
         self.last_action_agent = action
 
@@ -54,14 +59,19 @@ class Maze:
         if 0 <= next_y <= self.maze.shape[1] - 1 and 0 <= next_x <= self.maze.shape[0] - 1:
             self.agent_location = (next_y, next_x)
 
+
+
         # Calculate rewards
         reward = self.reward_map[self.agent_location]
         self.total_reward += reward
+        # print(f"{self.agent_location=}\t{reward=}")
+        # print(reward)
 
         # check if end of sim
         if self.agent_location in self.end_coord:
             self.done = True
 
+        observation = self.get_state()
         return observation, reward, self.done, {}
 
     def get_state(self):
@@ -71,6 +81,9 @@ class Maze:
     def render(self):
         """Render function for visualizing the maze."""
         return render_in_step(self)
+
+    def reset(self, agent_location):
+        self.agent_location = agent_location
 
     def __str__(self):
         """Return for debugging."""

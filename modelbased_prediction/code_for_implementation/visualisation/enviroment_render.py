@@ -15,14 +15,16 @@ def render_background(environment):
     :return: Background as pillow image
     """
     # Loading textures in
-    path = Image.open(textures_path / "dirt.png")
+    path = Image.open(textures_path / "grass.png")
+    water = Image.open(textures_path / "water.png")
+    highlight = Image.open(textures_path / "highlighter.png")
     exit_s = Image.open(textures_path / "objective_marker.png")
 
     # Get width and height of the images
     tile_size_width, tile_size_height = path.size
 
     # Variable declaration
-    maze = environment.maze  # np.array
+    maze = environment.reward_map  # np.array
 
     # Calculate canvas size of the maze
     width = maze.shape[0] * tile_size_width
@@ -36,9 +38,12 @@ def render_background(environment):
 
     # Loop through values from the maze and determine layout
     for height_row, width_values in enumerate(maze):
-        for index, _ in enumerate(width_values):
-            background.paste(path, (index * tile_size_width, height_row * tile_size_height), path)
-
+        for index, reward_value in enumerate(width_values):
+            if reward_value == -10:
+                background.paste(water, (index * tile_size_width, height_row * tile_size_height), water)
+            else:
+                background.paste(path, (index * tile_size_width, height_row * tile_size_height), path)
+            background.paste(highlight, (index * tile_size_width, height_row * tile_size_height), highlight)
     # Loop through values from the maze and determine reward table
     for height_row, width_values in enumerate(environment.reward_map):
         for index, rewards in enumerate(width_values):
@@ -65,20 +70,13 @@ def render_in_step(environment):
 
     # Calculate canvas size of the maze
     tile_width = environment.rendered_background.width // environment.maze.shape[0]
-    # tile_height = environment.rendered_background.height // environment.maze.shape[1]
 
     # Get width and height of the images
     tile_size_width, tile_size_height = agent_icon.size
 
-    # # Loop through values from the maze and determine layout
-    # for height_row, width_values in enumerate(environment.occupied_map):
-    #     for index, occupation_value in enumerate(width_values):
-    #         if occupation_value > 0:
-    #             copy_background.paste(agent_icon, (index * tile_size_width, height_row * tile_size_height), agent_icon)
-
     # Draw location of the agent in the maze
     copy_background.paste(agent_icon, (
-        environment.agent_location[0] * tile_size_width, environment.agent_location[1] * tile_size_height), agent_icon)
+        environment.agent_location[1] * tile_size_width, environment.agent_location[0] * tile_size_height), agent_icon)
 
     # Draw current step and reword on the screen
     ImageDraw.Draw(copy_background).text((5, 0), f"Time: {environment.sim_step}\nReward: {environment.total_reward}")
@@ -88,7 +86,8 @@ def render_in_step(environment):
                              1: 'right',
                              2: 'down',
                              3: 'left',
-                             4: 'stay'}
+                             4: 'stay',
+                             None: 'None'}
 
     ImageDraw.Draw(copy_background).text((environment.rendered_background.width - 2 * tile_width, 0),
                                          f"Last action: {action_to_string_dict[environment.last_action_agent]}")

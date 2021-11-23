@@ -24,6 +24,10 @@ if __name__ == "__main__":
     # Get first observation for loop
     observation = environment.get_state()
 
+    if environment.visualize:
+        cv2.namedWindow(window_name, cv2.WINDOW_GUI_EXPANDED)
+        cv2.resizeWindow(window_name, 800, 800)
+
     while not done:
         # Decide an action according to the observation
         action = a1.get_action_from_policy(observation)

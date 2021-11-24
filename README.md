@@ -1,5 +1,13 @@
 # Adaptive-Systems-2021
 
+## Assignments
+Model-based Prediction and Control
+```bash
+Adaptive-Systems-2021/modelbased_prediction/
+```
+
+
+## Model-based Prediction and Control
 ### Installation
 To install the package run the following command: 
 ```bash 
@@ -16,14 +24,14 @@ Run the following command from Adaptive-Systems-2021/
 ```bash
 python modelbased_prediction/code_for_implementation/simulator.py 1
 ```
-### Visual of the value based policy
+#### Visual of the value based policy
 ![Alt Text](https://im5.ezgif.com/tmp/ezgif-5-60f19bc3494d.gif)
 
 
 
 ### Iterations
 <details open>
-<summary> Click me</summary>
+<summary> Click me </summary>
 
 
 |it 0|  |   |    | 
@@ -119,10 +127,10 @@ python modelbased_prediction/code_for_implementation/simulator.py 1
 
 </details>
 
-## Run random based policy with the following command
+### Run random based policy with the following command
 Run the following command from Adaptive-Systems-2021/
 ```bash
 python modelbased_prediction/code_for_implementation/simulator.py 0
 ```
-### Visual of the random based policy
+#### Visual of the random based policy
 ![Alt Text](https://im5.ezgif.com/tmp/ezgif-5-3ba65d54a808.gif)

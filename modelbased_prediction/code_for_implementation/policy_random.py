@@ -8,6 +8,11 @@ import numpy as np
 class PureRandomPolicy(Policy):
     """Pure random policy is a policy that takes action on a pure random base."""
 
+    def __init__(self):
+        """Init of random Policy."""
+        self.visual = False
+        self.visual_matrix = None
+
     def decide_action(self, observation):
         """Decide action based on pure random."""
         return np.random.choice([Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT])

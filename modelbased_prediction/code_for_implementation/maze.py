@@ -49,6 +49,8 @@ class Maze:
 
         action_coord_delta_y, action_coord_delta_x = translate_action_to_coord[action]
 
+        # print(self.agent_location)
+
         next_y = self.agent_location[0] + action_coord_delta_y
         next_x = self.agent_location[1] + action_coord_delta_x
 

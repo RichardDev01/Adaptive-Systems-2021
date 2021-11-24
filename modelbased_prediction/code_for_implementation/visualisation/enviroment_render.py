@@ -74,10 +74,6 @@ def render_in_step(environment):
     # Get width and height of the images
     tile_size_width, tile_size_height = agent_icon.size
 
-    # Draw location of the agent in the maze
-    copy_background.paste(agent_icon, (
-        environment.agent_location[1] * tile_size_width, environment.agent_location[0] * tile_size_height), agent_icon)
-
     # Draw current step and reword on the screen
     ImageDraw.Draw(copy_background).text((5, 0), f"Time: {environment.sim_step}\nReward: {environment.total_reward}")
 
@@ -91,4 +87,20 @@ def render_in_step(environment):
 
     ImageDraw.Draw(copy_background).text((environment.rendered_background.width - 2 * tile_width, 0),
                                          f"Last action: {action_to_string_dict[environment.last_action_agent]}")
+
+    # Draw actions according to the value matrix
+    if environment.agent.policy.visual_matrix is not None:
+        # Loop through values from the maze and determine reward table
+        for height_row, width_values in enumerate(environment.agent.policy.visual_matrix):
+            for index, action in enumerate(width_values):
+                ImageDraw.Draw(copy_background).text((index * tile_size_width + tile_size_width / 4,
+                                                      height_row * tile_size_height + tile_size_height / 3),
+                                                     f"A ={action}")
+
+        # Draw location of the agent in the maze
+    copy_background.paste(agent_icon,
+                          (environment.agent_location[1] * tile_size_width,
+                           environment.agent_location[0] * tile_size_height),
+                          agent_icon)
+
     return copy_background

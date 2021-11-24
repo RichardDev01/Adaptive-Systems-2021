@@ -7,15 +7,21 @@ from maze import Maze
 from policy_random import PureRandomPolicy
 from policy_value_based import ValueBasedPolicy
 from agent import Agent
+import sys
+
 
 if __name__ == "__main__":
     # Creating environment
-    # policy = PureRandomPolicy()
-    policy = ValueBasedPolicy()
-    a1 = Agent(policy)
+    print("Argument List:", str(sys.argv))
+    if int(sys.argv[1]) == 0:
+        policy = PureRandomPolicy()
+        a1 = Agent(policy)
+    else:
+        policy = ValueBasedPolicy()
+        a1 = Agent(policy)
     environment = Maze(a1, visualize=True)
 
-    # Testing Value function
+    # Value function for value based policy
     a1.value_iteration()
 
     # Creating variables that keep track of the simulation

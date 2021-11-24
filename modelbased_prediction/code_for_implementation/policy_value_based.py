@@ -7,11 +7,13 @@ from action import Action
 class ValueBasedPolicy(Policy):
     """Pure random policy is a policy that takes action on a pure random base."""
 
-    def __init__(self, gamma=1):
+    def __init__(self, gamma=1, visuals=True):
         """Create Value based policy with parameters."""
         self.value_matrix = None
+        self.visual_matrix = None
         self.agent = None
         self.gamma = gamma
+        self.visual = visuals
 
     def decide_action(self, observation):
         """Decide action based on pure random."""

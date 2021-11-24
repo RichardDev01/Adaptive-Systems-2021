@@ -52,8 +52,30 @@ class Agent:
             self.policy.value_matrix = new_value_matrix
 
             # Visualise the update process # TODO
+            if self.policy.visual:
+                self.visual_function()
 
-            print(self.policy.value_matrix)
+                print(f"-----iteration {i}\n{self.policy.value_matrix}\n------\n{self.policy.visual_matrix}\n-----\n")
+
+    def visual_function(self):
+        """This function translate the value_matrix to visual matrix."""
+        self.policy.visual_matrix = np.zeros((4, 4), dtype=str)
+        action_to_string_dict = {0: 'up',
+                             1: 'right',
+                             2: 'down',
+                             3: 'left',
+                             4: 'stay',
+                                 None: 'None'}
+        # Get all values from every action possible
+        for index_y, x in enumerate(self.policy.value_matrix):
+            for index_x, _ in enumerate(x):
+                # Check if it is a terminal state
+                if (index_x, index_y) not in self.env.end_coord:
+                    state = (index_y, index_x)
+                    self.env.reset(state)
+                    action = self.policy.decide_action({"agent_location": state})
+                    self.policy.visual_matrix[state] = action_to_string_dict[action]
+
 
     def get_action_from_policy(self, observation):
         """Get action from policy."""

@@ -24,5 +24,6 @@ class ValueBasedPolicy(Policy):
             self.agent.env.reset(observation["agent_location"])
             obs, r, _, _ = self.agent.env.step(action)
             outcome.append((action, r, obs))
+
         # Return best value using the Bellman equation
         return max(outcome, key=lambda x: x[1] + self.gamma * self.value_matrix[x[2]["agent_location"]])[0]

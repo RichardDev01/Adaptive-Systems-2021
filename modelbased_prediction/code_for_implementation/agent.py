@@ -48,10 +48,11 @@ class Agent:
             if np.allclose(self.policy.value_matrix, new_value_matrix):
                 print(f"No difference from previous iteration")
                 break
+
             # Update matrix
             self.policy.value_matrix = new_value_matrix
 
-            # Visualise the update process # TODO
+            # Visualise the update process
             if self.policy.visual:
                 self.visual_function()
 
@@ -66,6 +67,7 @@ class Agent:
                              3: 'left',
                              4: 'stay',
                                  None: 'None'}
+
         # Get all values from every action possible
         for index_y, x in enumerate(self.policy.value_matrix):
             for index_x, _ in enumerate(x):
@@ -75,7 +77,6 @@ class Agent:
                     self.env.reset(state)
                     action = self.policy.decide_action({"agent_location": state})
                     self.policy.visual_matrix[state] = action_to_string_dict[action]
-
 
     def get_action_from_policy(self, observation):
         """Get action from policy."""

@@ -1,5 +1,4 @@
 # Adaptive-Systems-2021
-# bad-apple-ursina
 
 ### Installation
 To install the package run the following command: 

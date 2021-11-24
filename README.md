@@ -25,7 +25,8 @@ Run the following command from Adaptive-Systems-2021/
 python modelbased_prediction/code_for_implementation/simulator.py 1
 ```
 #### Visual of the value based policy
-![Alt Text](https://im5.ezgif.com/tmp/ezgif-5-60f19bc3494d.gif)
+
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/valuebasedpolicy.gif?raw=true)
 
 
 
@@ -133,4 +134,4 @@ Run the following command from Adaptive-Systems-2021/
 python modelbased_prediction/code_for_implementation/simulator.py 0
 ```
 #### Visual of the random based policy
-![Alt Text](https://im5.ezgif.com/tmp/ezgif-5-3ba65d54a808.gif)
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/randompolicy.gif?raw=true)

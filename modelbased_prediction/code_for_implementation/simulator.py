@@ -29,10 +29,12 @@ if __name__ == "__main__":
     # Get first observation for loop
     observation = environment.get_state()
 
+    # Create visualisation window
     if environment.visualize:
         cv2.namedWindow(window_name, cv2.WINDOW_GUI_EXPANDED)
         cv2.resizeWindow(window_name, 800, 800)
 
+    # Run simulation
     while not done:
         if environment.visualize:
             # Render current time in simulation for visual output
@@ -46,26 +48,25 @@ if __name__ == "__main__":
 
             # On window [X] button press: stop the simulation and destroy the window
             if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1:
+                environment.visualize = False
                 break
         # Decide an action according to the observation
         action = a1.get_action_from_policy(observation)
-        # print(action)
+
+        # Take action in the world
         observation, reward, done, info = environment.step(action)
 
+        # Counting reward
         total_reward += reward
 
-
     if environment.visualize:
-        # Render current time in simulation for visual output
+        # Render Last action of the simulation
         render = environment.render()
 
         # Display render of current time in the environment
         cv2.imshow(window_name, cv2.cvtColor(np.array(render), cv2.COLOR_BGR2RGB))
 
-        # Delay between renders of the simulation
-        cv2.waitKey(wait_key)
-
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-    print(f"{reward=}\ntime={environment.sim_step}")
+    print(f"{total_reward=}\ntime={environment.sim_step}")

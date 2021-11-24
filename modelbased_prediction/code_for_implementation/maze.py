@@ -21,8 +21,6 @@ class Maze:
         self.start_coord = start_coord
         self.end_coord = end_coords
 
-        # self.occupied_map[start_coord] = 1  # Agent occupation
-
         self.agent_location = start_coord
         self.done = done
         self.sim_step = 0
@@ -39,7 +37,6 @@ class Maze:
 
     def step(self, action):
         """Step function used for playing out decided actions."""
-
         self.sim_step += 1
         self.last_action_agent = action
 
@@ -59,18 +56,15 @@ class Maze:
         if 0 <= next_y <= self.maze.shape[1] - 1 and 0 <= next_x <= self.maze.shape[0] - 1:
             self.agent_location = (next_y, next_x)
 
-
-
         # Calculate rewards
         reward = self.reward_map[self.agent_location]
         self.total_reward += reward
-        # print(f"{self.agent_location=}\t{reward=}")
-        # print(reward)
 
         # check if end of sim
         if self.agent_location in self.end_coord:
             self.done = True
 
+        # Get observation of the state
         observation = self.get_state()
         return observation, reward, self.done, {}
 
@@ -83,6 +77,7 @@ class Maze:
         return render_in_step(self)
 
     def reset(self, agent_location):
+        """Reset env to specific state."""
         self.agent_location = agent_location
 
     def __str__(self):

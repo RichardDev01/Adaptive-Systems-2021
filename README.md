@@ -20,7 +20,7 @@ pip install .[dev]
 ```
 
 ## Run value based policy with the following command
-Run the following command from Adaptive-Systems-2021/
+Run the following command from `Adaptive-Systems-2021/` and press `any key` to go to the next state
 ```bash
 python modelbased_prediction/code_for_implementation/simulator.py 1
 ```
@@ -129,7 +129,7 @@ python modelbased_prediction/code_for_implementation/simulator.py 1
 </details>
 
 ### Run random based policy with the following command
-Run the following command from Adaptive-Systems-2021/
+Run the following command from `Adaptive-Systems-2021/` and press `any key` to go to the next state
 ```bash
 python modelbased_prediction/code_for_implementation/simulator.py 0
 ```

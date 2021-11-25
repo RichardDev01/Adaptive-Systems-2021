@@ -14,5 +14,10 @@ class PureRandomPolicy(Policy):
         self.visual_matrix = None
 
     def decide_action(self, observation):
-        """Decide action based on pure random."""
+        """
+        Decide action based on pure random.
+
+        :param observation: observation is a dict containing information about the environment. NOT USED FOR THIS POLICY
+        :return: Random action chosen by policy
+        """
         return np.random.choice([Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT])

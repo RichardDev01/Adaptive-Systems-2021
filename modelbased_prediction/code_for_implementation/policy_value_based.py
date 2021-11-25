@@ -8,7 +8,12 @@ class ValueBasedPolicy(Policy):
     """Pure random policy is a policy that takes action on a pure random base."""
 
     def __init__(self, gamma=1, visuals=True):
-        """Create Value based policy with parameters."""
+        """
+        Create Value based policy with parameters.
+
+        :param gamma: Gamma is the discount value is this context
+        :param visuals: This parameter is used to check if we want to visualise
+        """
         self.value_matrix = None
         self.visual_matrix = None
         self.agent = None
@@ -16,7 +21,12 @@ class ValueBasedPolicy(Policy):
         self.visual = visuals
 
     def decide_action(self, observation):
-        """Decide action based on pure random."""
+        """
+        Decide action based on pure random.
+
+        :param observation: observation is a dict containing information about the environment
+        :return: Action chosen based on the observation
+        """
         all_action = [Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT]
         outcome = []
         # Get all values from every action possible

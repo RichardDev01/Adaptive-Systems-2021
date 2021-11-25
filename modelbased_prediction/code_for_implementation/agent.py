@@ -16,7 +16,12 @@ class Agent:
         pass
 
     def value_iteration(self, itera: int = 200, gamma: int = 1):
-        """Calculate values for value function."""
+        """
+        Calculate values for value function and write to policy.
+
+        :param itera: The amount of maximum iterations used for value iterations.
+        :param gamma: This is the discount value used for value iteration
+        """
         # Write environment to policy because of model based policy
         self.policy.agent = self
         self.policy.gamma = gamma
@@ -79,7 +84,12 @@ class Agent:
                     self.policy.visual_matrix[state] = action_to_string_dict[action]
 
     def get_action_from_policy(self, observation):
-        """Get action from policy."""
+        """
+        Get action from policy.
+
+        :param observation: observation of the world given as dict
+        :return: Action decided by the policy
+        """
         return self.policy.decide_action(observation)
 
     def __str__(self):

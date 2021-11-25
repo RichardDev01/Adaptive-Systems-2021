@@ -10,7 +10,15 @@ class Maze:
     """Class file for the maze as environment."""
 
     def __init__(self, agent, start_coord=(3, 3), end_coords=[(0, 3), (3, 0)], visualize=False, done=False):
-        """Create maze with initial values."""
+        """
+        Create maze with initial values.
+
+        :param agent: Agent used for this environment
+        :param start_coord: Start coordinate for the agent
+        :param end_coords: Ending coordinates for the maze, terminal states
+        :param visualize: Option to visualise the maze
+        :param done: Value of the maze to check if the simulation is done.
+        """
         self.maze = np.zeros((4, 4))
         self.reward_map = np.array([[-1, -1, -1, 40],
                                     [-1, -1, -10, -10],
@@ -36,7 +44,12 @@ class Maze:
         self.agent.env = copy.copy(self)
 
     def step(self, action):
-        """Step function used for playing out decided actions."""
+        """
+        Step function used for playing out decided actions.
+
+        :param action: Action used in the step
+        :return: Returns the observation of the world, the reward from the action, value if done, additional info
+        """
         self.sim_step += 1
         self.last_action_agent = action
 
@@ -79,7 +92,11 @@ class Maze:
         return render_in_step(self)
 
     def reset(self, agent_location):
-        """Reset env to specific state."""
+        """
+        Reset env to specific state.
+
+        :param agent_location: The agent location you want to reset to
+        """
         self.agent_location = agent_location
 
     def __str__(self):

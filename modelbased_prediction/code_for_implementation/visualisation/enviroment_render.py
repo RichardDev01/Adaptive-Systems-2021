@@ -9,7 +9,7 @@ textures_path = Path(__file__) / '..' / 'textures'
 
 def render_background(environment):
     """
-    Render background used for the simluation.
+    Render background used for the simulation.
 
     :param environment: The environment given to render
     :return: Background as pillow image
@@ -62,7 +62,12 @@ def render_background(environment):
 
 
 def render_in_step(environment):
-    """Render the things that needs to be updated every step."""
+    """
+    Render the things that needs to be updated every step.
+
+    :param environment: The environment given to render
+    :return: Background with sprites in step rendered as pillow image
+    """
     # Copy from background
     copy_background = environment.rendered_background.copy()
     # Declare with images used for the agent

@@ -12,7 +12,6 @@ import sys
 
 if __name__ == "__main__":
     # Creating environment
-    print("Argument List:", str(sys.argv))
     if int(sys.argv[1]) == 0:
         policy = PureRandomPolicy()
         a1 = Agent(policy)

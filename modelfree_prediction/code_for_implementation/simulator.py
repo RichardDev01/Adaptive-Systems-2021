@@ -11,7 +11,7 @@ import sys
 import copy
 
 
-def first_visit_mc(environment, iterations=1000, discount_rate=1):
+def first_visit_mc(environment, iterations=10000, discount_rate=0.9, random_spawn=False):
     """
     Monte Carlo methods for learning the state-value function for a given policy.
 
@@ -53,7 +53,7 @@ def first_visit_mc(environment, iterations=1000, discount_rate=1):
 
     for i in range(iterations):
         episode_log = []
-        environment.reset()
+        environment.reset(random_start=random_spawn)
 
         total_reward = 0
         # Get first observation for loop
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # print(environment_vb.agent.first_visit_mc())
     # print(environment_vb.first_visit_mc())
 
-    print(first_visit_mc(environment_pr))
+    print(first_visit_mc(environment_pr, iterations=1000, discount_rate=0.9, random_spawn=True))
 
     # # Visualisation variables
     # wait_key = 0

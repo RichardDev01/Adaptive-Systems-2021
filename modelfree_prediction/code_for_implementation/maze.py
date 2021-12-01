@@ -1,6 +1,7 @@
 """Maze class file."""
 
 import numpy as np
+from random import choice
 from visualisation.enviroment_render import render_background, render_in_step
 
 import copy
@@ -94,13 +95,17 @@ class Maze:
         """Render function for visualizing the maze."""
         return render_in_step(self)
 
-    def reset(self, agent_location=(3, 3)):
+    def reset(self, agent_location=(3, 3), random_start=False):
         """
         Reset env to specific state.
 
+        :param random_start:
         :param agent_location: The agent location you want to reset to
         """
-        self.agent_location = agent_location
+        if random_start:
+            self.agent_location = tuple(choice(np.argwhere(self.reward_map < 0)))
+        else:
+            self.agent_location = agent_location
         self.done = False
         self.sim_step = 0
         self.total_reward = 0

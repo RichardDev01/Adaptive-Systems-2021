@@ -11,7 +11,7 @@ import sys
 import copy
 
 
-def first_visit_mc(environment, iterations=2):
+def first_visit_mc(environment, iterations=1000, discount_rate=1):
     """
     Monte Carlo methods for learning the state-value function for a given policy.
 
@@ -38,40 +38,13 @@ def first_visit_mc(environment, iterations=2):
     #    Returns(s) ← an empty list, for all s ∈ S
 
     dict_of_states = {}
-    # print(np.empty((3,3))[:] == np.NaN)
     array_estimates_policy = copy.copy(environment.maze)
-    # array_estimates_policy[:] = np.array([0, 0, 0, 0])
-    # print(array_estimates_policy)
     # Iterate over y and x
     for index_y, x in enumerate(array_estimates_policy):
         for index_x, _ in enumerate(x):
             # all_action = [Action.UP, Action.RIGHT, Action.DOWN, Action.LEFT]
             state = (index_y, index_x)
-            dict_of_states[state] = {"action_value": [0, 0, 0, 0], "rewards": [0], "avarage": 0}
-            # array_estimates_policy[(index_y, index_x)] = [0, 0, 0, 0]
-    #
-    # print(f"{dict_of_states=}\n")
-    # print(f"{dict_of_states[(0,0)]}\n")
-
-    # # Creating variables that keep track of the simulation
-    # done = False
-    # total_reward = 0
-    #
-    # # Get first observation for loop
-    # observation = environment.get_state()
-    #
-    # # Run simulation
-    # while not done:
-    #     # Decide an action according to the observation
-    #     action = environment.agent.get_action_from_policy(observation)
-    #
-    #     # Take action in the world
-    #     observation, reward, done, info = environment.step(action)
-    #
-    #     # Counting reward
-    #     total_reward += reward
-    #
-    # print(f"{total_reward=}\ntime={environment.sim_step}")
+            dict_of_states[state] = {"action_value": [0, 0, 0, 0], "rewards": [0], "average": 0}
 
     # Loop forever (for each episode):
     #     Generate an episode following π: S0,A0,R1, S1,A1,R2, . . . , ST−1,AT−1,RT
@@ -104,9 +77,32 @@ def first_visit_mc(environment, iterations=2):
             total_reward += reward
         episodes_dict[i] = episode_log
         episodes_dict[i].append([total_reward, environment.sim_step])
-        # print(f"{total_reward=}\ntime={environment.sim_step}")
-    print(episodes_dict)
-    return "End of first_visit_mc"
+
+        # G ← 0
+        # Loop for each step of episode, t = T −1, T −2, . . . , 0:
+        #     G ← γG + Rt+1
+        #     Unless St appears in S0, S1, . . . , St−1:
+        #         Append G to Returns(St)
+        #         V (St) ← average(Returns(St))
+
+        return_list = []
+        big_g = 0
+        inverted_log = episode_log[::-1][1:]
+        for index, step_info in enumerate(inverted_log):
+            big_g = discount_rate * big_g + step_info[2]
+            if not step_info[0] in [x[0] for x in inverted_log[index + 1:]]:
+                return_list.append((step_info[0], big_g))
+                dict_of_states[step_info[0]]['rewards'].append(big_g)
+                dict_of_states[step_info[0]]['average'] = np.average(dict_of_states[step_info[0]]['rewards'])
+
+        value_matrix = copy.copy(environment.maze)
+        for key in dict_of_states.keys():
+            value_matrix[key] = round(dict_of_states[key]['average'], 2)
+
+    # print(value_matrix)
+
+    # print(episodes_dict)
+    return value_matrix
 
 
 if __name__ == "__main__":

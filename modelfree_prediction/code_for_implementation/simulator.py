@@ -1,4 +1,4 @@
-"""This file is used for running the simulation for model free predictions"""
+"""This file is used for running the simulation for model free predictions."""
 
 import cv2
 

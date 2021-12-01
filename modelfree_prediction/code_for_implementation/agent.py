@@ -51,7 +51,7 @@ class Agent:
                         new_value_matrix[state] = r + gamma * self.policy.value_matrix[obs["agent_location"]]
             # Check if there is a difference from previous iteration
             if np.allclose(self.policy.value_matrix, new_value_matrix):
-                print(f"No difference from previous iteration")
+                print("No difference from previous iteration")
                 break
 
             # Update matrix
@@ -64,13 +64,13 @@ class Agent:
                 print(f"-----iteration {i}\n{self.policy.value_matrix}\n------\n{self.policy.visual_matrix}\n-----\n")
 
     def visual_function(self):
-        """This function translate the value_matrix to visual matrix."""
+        """Translate the value_matrix to visual matrix."""
         self.policy.visual_matrix = np.zeros((4, 4), dtype=str)
         action_to_string_dict = {0: 'up',
-                             1: 'right',
-                             2: 'down',
-                             3: 'left',
-                             4: 'stay',
+                                 1: 'right',
+                                 2: 'down',
+                                 3: 'left',
+                                 4: 'stay',
                                  None: 'None'}
 
         # Get all values from every action possible
@@ -93,4 +93,9 @@ class Agent:
         return self.policy.decide_action(observation)
 
     def __str__(self):
-        return f"{self.policy=}\n" \
+        """
+        Debug string return function.
+
+        :return: string of object
+        """
+        return f"{self.policy=}\n"

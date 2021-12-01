@@ -81,6 +81,9 @@ class Maze:
 
         # Get observation of the state
         observation = self.get_state()
+
+        # print(f"{self.agent_location=}")
+
         return observation, reward, self.done, {}
 
     def get_state(self):
@@ -91,13 +94,16 @@ class Maze:
         """Render function for visualizing the maze."""
         return render_in_step(self)
 
-    def reset(self, agent_location):
+    def reset(self, agent_location=(3, 3)):
         """
         Reset env to specific state.
 
         :param agent_location: The agent location you want to reset to
         """
         self.agent_location = agent_location
+        self.done = False
+        self.sim_step = 0
+        self.total_reward = 0
 
     def __str__(self):
         """Return for debugging."""

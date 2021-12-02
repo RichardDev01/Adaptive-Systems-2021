@@ -87,10 +87,10 @@ def first_visit_mc(environment, iterations=10000, discount_rate=0.9, random_spaw
 
         return_list = []
         big_g = 0
-        inverted_log = episode_log[::-1][1:]
-        for index, step_info in enumerate(inverted_log):
+        inverted_episode_log = episode_log[::-1][1:]
+        for index, step_info in enumerate(inverted_episode_log):
             big_g = discount_rate * big_g + step_info[2]
-            if not step_info[0] in [x[0] for x in inverted_log[index + 1:]]:
+            if not step_info[0] in [x[0] for x in inverted_episode_log[index + 1:]]:
                 return_list.append((step_info[0], big_g))
                 dict_of_states[step_info[0]]['rewards'].append(big_g)
                 dict_of_states[step_info[0]]['average'] = np.average(dict_of_states[step_info[0]]['rewards'])
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # print(environment_vb.agent.first_visit_mc())
     # print(environment_vb.first_visit_mc())
 
-    print(first_visit_mc(environment_pr, iterations=1000, discount_rate=0.9, random_spawn=True))
+    print(first_visit_mc(environment_vb, iterations=30000, discount_rate=0.9, random_spawn=True))
 
     # # Visualisation variables
     # wait_key = 0

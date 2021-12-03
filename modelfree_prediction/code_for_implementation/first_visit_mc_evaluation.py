@@ -76,22 +76,28 @@ def first_visit_mc(environment, iterations=10000, discount_rate=0.9, exploring_s
         #     Unless St appears in S0, S1, . . . , St−1:
         #         Append G to Returns(St)
         #         V (St) ← average(Returns(St))
-
-        return_list = []
         big_g = 0
         inverted_episode_log = episode_log[::-1][1:]
         for index, step_info in enumerate(inverted_episode_log):
             big_g = discount_rate * big_g + step_info[2]
             if not step_info[0] in [x[0] for x in inverted_episode_log[index + 1:]]:
-                return_list.append((step_info[0], big_g))
                 dict_of_states[step_info[0]]['rewards'].append(big_g)
                 dict_of_states[step_info[0]]['average'] = np.average(dict_of_states[step_info[0]]['rewards'])
+
+                # Incremental Implementation # TODO it is not working
+                # Qn+1  = NewEstimate OldEstimate + StepSize (Target - oldestimate)
+
+                """
+
+                old_estimate = dict_of_states[step_info[0]]['average']
+                step_size = 1 / (index + 1)
+                target = step_info[2]
+
+                dict_of_states[step_info[0]]['average'] = old_estimate + (step_size * (target - old_estimate))
+
+                """
 
         value_matrix = copy.copy(environment.maze)
         for key in dict_of_states.keys():
             value_matrix[key] = round(dict_of_states[key]['average'], 2)
-
-    # print(value_matrix)
-
-    # print(episodes_dict)
     return value_matrix

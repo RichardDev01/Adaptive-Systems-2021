@@ -22,8 +22,11 @@ def first_visit_mc(environment, iterations=10000, discount_rate=0.9, exploring_s
                 Append G to Returns(St)
                 V (St) ← average(Returns(St))
 
-
-    :return:
+    :param environment: Environment of the simulation contains the agent with policy
+    :param iterations: Loop amount for creating episodes
+    :param discount_rate: Discount value used in algorithm
+    :param exploring_starts: Enable or disable exploring starts
+    :return: Value matrix of given policy in environment given
     """
     #    Initialize:
     #    V (s) ∈ R, arbitrarily, for all s ∈ S

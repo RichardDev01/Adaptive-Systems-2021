@@ -26,6 +26,27 @@ if __name__ == "__main__":
     done = False
     total_reward = 0
 
-    print("")
+    iterations = 10000
+    discount_rate = 1
+    exploring_starts = True
+    print(f"Value based poly ;{iterations=}\t{discount_rate=}\t{exploring_starts=}\nOutcome\n")
 
-    print(first_visit_mc(environment_vb, iterations=30000, discount_rate=0.9, exploring_starts=True))
+    print(first_visit_mc(environment_vb, iterations=iterations, discount_rate=discount_rate, exploring_starts=exploring_starts), "\n")
+
+    discount_rate = 0.9
+
+    print(f"Value based poly ;{iterations=}\t{discount_rate=}\t{exploring_starts=}\nOutcome\n")
+
+    print(first_visit_mc(environment_vb, iterations=iterations, discount_rate=discount_rate, exploring_starts=exploring_starts), "\n")
+
+    discount_rate = 1
+
+    print(f"Random based poly ;{iterations=}\t{discount_rate=}\t{exploring_starts=}\nOutcome\n")
+
+    print(first_visit_mc(environment_pr, iterations=iterations, discount_rate=discount_rate, exploring_starts=exploring_starts), "\n")
+
+    discount_rate = 0.9
+
+    print(f"Random based poly ;{iterations=}\t{discount_rate=}\t{exploring_starts=}\nOutcome\n")
+
+    print(first_visit_mc(environment_pr, iterations=iterations, discount_rate=discount_rate, exploring_starts=exploring_starts), "\n")

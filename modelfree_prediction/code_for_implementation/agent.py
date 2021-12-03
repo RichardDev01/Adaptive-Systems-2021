@@ -92,6 +92,14 @@ class Agent:
         """
         return self.policy.decide_action(observation)
 
+    def save_value_matrix(self, path='text.txt'):
+        """Save value matrix to file."""
+        np.savetxt(path, self.policy.value_matrix)
+
+    def load_value_matrix(self, path='text.txt'):
+        """Load value matrix from file."""
+        self.policy.value_matrix = np.genfromtxt(path)
+
     def __str__(self):
         """
         Debug string return function.

@@ -21,7 +21,11 @@ if __name__ == "__main__":
     environment_vb = Maze(a2, visualize=False)
 
     # Value function for value based policy
-    a2.value_iteration()
+    # a2.value_iteration()
+    # a2.save_value_matrix('policy_saves/optimal_policy.csv')
+
+    # Load optimal value matrix
+    a2.load_value_matrix('policy_saves/optimal_policy.csv')
 
     # Creating variables that keep track of the simulation
     done = False

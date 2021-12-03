@@ -64,44 +64,47 @@ if __name__ == "__main__":
                                  iterations=iterations,
                                  discount_rate=discount_rate,
                                  exploring_starts=exploring_starts), "\n")
+
+        iterations = 10000
+        discount_rate = 1
+        alpha = 0.1
+        exploring_starts = True
+        print(f"Value based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
+        print(tem_dif_ler(environment_vb,
+                          iterations=iterations,
+                          discount_rate=discount_rate,
+                          alpha=alpha,
+                          exploring_starts=exploring_starts))
+
+        if int(sys.argv[1]) == 1:
+
+            discount_rate = 0.9
+            print(f"Value based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
+            print(tem_dif_ler(environment_vb,
+                              iterations=iterations,
+                              discount_rate=discount_rate,
+                              alpha=alpha,
+                              exploring_starts=exploring_starts))
+
+            discount_rate = 1
+            alpha = 0.1
+            exploring_starts = True
+            print(
+                f"Random based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
+            print(tem_dif_ler(environment_pr,
+                              iterations=iterations,
+                              discount_rate=discount_rate,
+                              alpha=alpha,
+                              exploring_starts=exploring_starts))
+
+            discount_rate = 0.9
+            print(
+                f"Random based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
+            print(tem_dif_ler(environment_pr,
+                              iterations=iterations,
+                              discount_rate=discount_rate,
+                              alpha=alpha,
+                              exploring_starts=exploring_starts))
+
     except IndexError:
         print("")
-
-    iterations = 10000
-    discount_rate = 1
-    alpha = 0.1
-    exploring_starts = True
-    print(f"Value based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
-    print(tem_dif_ler(environment_vb,
-                      iterations=iterations,
-                      discount_rate=discount_rate,
-                      alpha=alpha,
-                      exploring_starts=exploring_starts))
-
-    discount_rate = 0.9
-    print(f"Value based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
-    print(tem_dif_ler(environment_vb,
-                      iterations=iterations,
-                      discount_rate=discount_rate,
-                      alpha=alpha,
-                      exploring_starts=exploring_starts))
-
-    discount_rate = 1
-    alpha = 0.1
-    exploring_starts = True
-    print(
-        f"Random based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
-    print(tem_dif_ler(environment_pr,
-                      iterations=iterations,
-                      discount_rate=discount_rate,
-                      alpha=alpha,
-                      exploring_starts=exploring_starts))
-
-    discount_rate = 0.9
-    print(
-        f"Random based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\nOutcome\n")
-    print(tem_dif_ler(environment_pr,
-                      iterations=iterations,
-                      discount_rate=discount_rate,
-                      alpha=alpha,
-                      exploring_starts=exploring_starts))

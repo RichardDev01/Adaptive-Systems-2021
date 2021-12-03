@@ -2,4 +2,4 @@
 
 ## outcome Monte-Carlo evaluation
 
-![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_mc_eva.png?raw=true)
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_mc_eva.PNG?raw=true)

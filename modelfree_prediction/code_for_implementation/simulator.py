@@ -8,8 +8,14 @@ from agent import Agent
 from first_visit_mc_evaluation import first_visit_mc
 from temporal_difference_learning import tem_dif_ler
 
+import os
+
 
 if __name__ == "__main__":
+
+    path = os.getcwd()
+    os.chdir('modelfree_prediction\code_for_implementation')
+
     # Creating environment
     policy_pr = PureRandomPolicy()
     a1 = Agent(policy_pr)
@@ -21,12 +27,13 @@ if __name__ == "__main__":
     environment_vb = Maze(a2, visualize=False)
 
     # Value function for value based policy
-    # a2.value_iteration()
+    a2.value_iteration()
     # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
     # print(a2.policy.value_matrix)
 
     # Load optimal value matrix
     a2.load_value_matrix('policy_saves/value_iteration_matrix.csv')
+    print(a2.policy.value_matrix)
 
     # Creating variables that keep track of the simulation
     done = False

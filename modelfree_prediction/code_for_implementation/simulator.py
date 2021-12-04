@@ -22,10 +22,11 @@ if __name__ == "__main__":
 
     # Value function for value based policy
     # a2.value_iteration()
-    # a2.save_value_matrix('policy_saves/optimal_policy.csv')
+    # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
+    # print(a2.policy.value_matrix)
 
     # Load optimal value matrix
-    a2.load_value_matrix('policy_saves/optimal_policy.csv')
+    a2.load_value_matrix('policy_saves/value_iteration_matrix.csv')
 
     # Creating variables that keep track of the simulation
     done = False

@@ -101,6 +101,7 @@ def on_policy_first_visit_mc_control(environment,
         #         Append G to Returns(St, At)
         #         Q(St, At) ← average(Returns(St, At))
         #         A* ← argmax a Q(St,a)                   (with ties broken arbitrarily)
+
         #         for all a ∈ A(St):
         #                         1 - ε + ε/|A(St)|   if a = A*
         #             π(a|St) ←

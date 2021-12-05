@@ -28,27 +28,10 @@ class EpsilonSoftGreedyPolicy(Policy):
         all_actions = [Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT]
 
         if np.random.rand(1)[0] < self.epsilon:
-            # print("max value")
-            # Translate data class to coordinates
-            translate_action_to_coord = {0: (-1, 0),
-                                         1: (0, 1),
-                                         2: (1, 0),
-                                         3: (0, -1),
-                                         4: (0, 0)}
             agent_pos = observation["agent_location"]
-            value_states = []
-            for index, action in enumerate(all_actions):
-                next_agent_pos = agent_pos
-                action_coord_delta_y, action_coord_delta_x = translate_action_to_coord[action]
-                next_y = agent_pos[0] + action_coord_delta_y
-                next_x = agent_pos[1] + action_coord_delta_x
-
-                # Check if next action is possible in the maze
-                if 0 <= next_y <= self.value_matrix.shape[1] - 1 and 0 <= next_x <= self.value_matrix.shape[0] - 1:
-                    next_agent_pos = (next_y, next_x)
-
-                    value_states.append((action, self.value_matrix[next_agent_pos]))
-            chosen_action = max(value_states, key=lambda x: x[1])[0]
+            max_value = max(self.q_table[agent_pos[0]][agent_pos[1]])
+            index_action = self.q_table[agent_pos[0]][agent_pos[1]].index(max_value)
+            chosen_action = index_action
             return chosen_action
         else:
             # print("random")

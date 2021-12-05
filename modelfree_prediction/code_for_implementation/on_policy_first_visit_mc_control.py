@@ -59,7 +59,7 @@ def on_policy_first_visit_mc_control(environment,
             # all_action = [Action.UP, Action.RIGHT, Action.DOWN, Action.LEFT]
             state = (index_y, index_x)
             dict_of_states[state] = {"action_value": [0, 0, 0, 0],
-                                     "rewards": [[0], [0], [0], [0]],
+                                     "rewards": [[], [], [], []],
                                      "average": [0, 0, 0, 0]}
 
     # Loop forever (for each episode):
@@ -107,7 +107,7 @@ def on_policy_first_visit_mc_control(environment,
         #                         ε/|A(St)|           if a ≠ A*
         big_g = 0
         inverted_episode_log = episode_log[::-1][1:]
-        print(inverted_episode_log)
+        # print(inverted_episode_log)
         # Step info[0] = State
         # Step info[1] = Action
         # Step info[2] = Reward
@@ -121,9 +121,14 @@ def on_policy_first_visit_mc_control(environment,
 
                 dict_of_states[step_info[0]]['rewards'][action_info].append(big_g)
                 dict_of_states[step_info[0]]['average'][action_info] = np.average(dict_of_states[state_info]['rewards'][action_info])
+                environment.agent.policy.q_table[state_info[0]][state_info[1]][action_info] = dict_of_states[step_info[0]]['average'][action_info]
 
+                # A_star = (step_info[0], np.argmax(dict_of_states[step_info[0]]['average']))
+                # print(A_star)
+
+        # print(dict_of_states)
         # value_matrix = copy.copy(environment.maze)
         # for key in dict_of_states.keys():
         #     value_matrix[key] = round(dict_of_states[key]['average'], 2)
-
+    print(environment.agent.policy.q_table)
     return environment.agent.policy.value_matrix

@@ -131,12 +131,12 @@ if __name__ == "__main__":
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
 
-            iterations = 1
+            iterations = 100000
             discount_rate = 1
             alpha = 0.1
             exploring_starts = False
             # epsilon = 0.7
-            epsilon = 1
+            epsilon = 0.7
             print(
                 f"on policy control e soft greedy policy\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\t{epsilon=}\nOutcome\n")
             print(on_policy_first_visit_mc_control(environment_eg,

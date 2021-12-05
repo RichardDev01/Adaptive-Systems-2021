@@ -8,7 +8,7 @@ import numpy as np
 class EpsilonSoftGreedyPolicy(Policy):
     """Epsilon Soft greedy policy."""
 
-    def __init__(self, epsilon: 0.7):
+    def __init__(self, epsilon=0.7):
         """
         Create Epsilon Soft greedy policy with parameters.
 
@@ -16,6 +16,7 @@ class EpsilonSoftGreedyPolicy(Policy):
         """
         self.value_matrix = None
         self.epsilon = epsilon
+        self.q_table = None
 
     def decide_action(self, observation):
         """
@@ -27,6 +28,7 @@ class EpsilonSoftGreedyPolicy(Policy):
         all_actions = [Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT]
 
         if np.random.rand(1)[0] < self.epsilon:
+            # print("max value")
             # Translate data class to coordinates
             translate_action_to_coord = {0: (-1, 0),
                                          1: (0, 1),
@@ -45,7 +47,9 @@ class EpsilonSoftGreedyPolicy(Policy):
                 if 0 <= next_y <= self.value_matrix.shape[1] - 1 and 0 <= next_x <= self.value_matrix.shape[0] - 1:
                     next_agent_pos = (next_y, next_x)
 
-                value_states.append((action, self.value_matrix[next_agent_pos]))
-            return max(value_states, key=lambda x: x[1])[0]
+                    value_states.append((action, self.value_matrix[next_agent_pos]))
+            chosen_action = max(value_states, key=lambda x: x[1])[0]
+            return chosen_action
         else:
+            # print("random")
             return np.random.choice(all_actions)

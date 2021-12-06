@@ -13,7 +13,7 @@ from on_policy_first_visit_mc_control import on_policy_first_visit_mc_control
 import os
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) >= 2:
         path = os.getcwd()
         os.chdir('modelfree_prediction\code_for_implementation')
 
@@ -32,6 +32,7 @@ if __name__ == "__main__":
     environment_vb = Maze(a2, visualize=False)
     environment_eg = Maze(a3, visualize=False)
 
+    print(os.getcwd())
     # Value function for value based policy
     a2.value_iteration()
     # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
@@ -40,8 +41,6 @@ if __name__ == "__main__":
     # Load optimal value matrix
     a2.load_value_matrix('policy_saves/value_iteration_matrix.csv')
     # print(a2.policy.value_matrix)
-
-
 
     # Creating variables that keep track of the simulation
     done = False
@@ -131,20 +130,17 @@ if __name__ == "__main__":
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
 
-            iterations = 100000
-            discount_rate = 1
-            alpha = 0.1
+            iterations = 50000
+            # discount_rate = 1
+            discount_rate = 0.9
             exploring_starts = False
-            # epsilon = 0.7
             epsilon = 0.7
             print(
-                f"on policy control e soft greedy policy\n{iterations=}\t{discount_rate=}\t{alpha=}\t{exploring_starts=}\t{epsilon=}\nOutcome\n")
+                f"on policy control e soft greedy policy\n{iterations=}\t{discount_rate=}\t\t{exploring_starts=}\t{epsilon=}\nOutcome\n")
             print(on_policy_first_visit_mc_control(environment_eg,
                                                    iterations=iterations,
                                                    discount_rate=discount_rate,
                                                    exploring_starts=exploring_starts,
                                                    epsilon=epsilon))
-
-            # print("3")
     except IndexError:
         print("")

@@ -39,7 +39,6 @@ def on_policy_first_visit_mc_control(environment,
     :param epsilon: Parameter for E-soft policy
     :return:
     """
-
     #    Initialize:
     #    π ← an arbitrary ε-soft policy
     #    Q(s,a) ∈ R, arbitrarily, for all s ∈ S ∈ A(s)
@@ -127,9 +126,6 @@ def on_policy_first_visit_mc_control(environment,
                 # A_star = (step_info[0], np.argmax(dict_of_states[step_info[0]]['average']))
                 # print(A_star)
 
-        # print(dict_of_states)
-        # value_matrix = copy.copy(environment.maze)
-        # for key in dict_of_states.keys():
-        #     value_matrix[key] = round(dict_of_states[key]['average'], 2)
-    print(environment.agent.policy.q_table)
-    return environment.agent.policy.value_matrix
+    # print(environment.agent.policy.q_table)
+    # return environment.agent.policy.value_matrix
+    return environment.agent.policy.visualise_q_table()

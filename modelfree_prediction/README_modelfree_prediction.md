@@ -25,3 +25,9 @@ python modelfree_prediction/code_for_implementation/simulator.py 2
 ![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_opfvmc_discount_1.PNG?raw=true)
 ![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_opfvmc_discount_09_text.PNG?raw=true)
 ![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_opfvmc_discount_09.PNG?raw=true)
+
+## Outcome On policy first visit Monte-carlo control
+Use this from root folder to get the same results
+```bash
+python modelfree_prediction/code_for_implementation/simulator.py 3
+```

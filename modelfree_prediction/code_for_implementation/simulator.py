@@ -9,6 +9,7 @@ from agent import Agent
 from first_visit_mc_evaluation import first_visit_mc
 from temporal_difference_learning import tem_dif_ler
 from on_policy_first_visit_mc_control import on_policy_first_visit_mc_control
+from sarsa_on_policy_control import sarsa_tem_dif_ler
 
 import os
 
@@ -142,5 +143,21 @@ if __name__ == "__main__":
                                                    discount_rate=discount_rate,
                                                    exploring_starts=exploring_starts,
                                                    epsilon=epsilon))
+
+        if int(sys.argv[1]) == 3:
+            iterations = 10000
+            discount_rate = 1
+            alpha = 0.1
+            epsilon = 0.7
+            exploring_starts = True
+            print(
+                f"Value based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
+            print(sarsa_tem_dif_ler(environment_vb,
+                                    iterations=iterations,
+                                    discount_rate=discount_rate,
+                                    alpha=alpha,
+                                    epsilon=epsilon,
+                                    exploring_starts=exploring_starts))
+            "SARSA"
     except IndexError:
         print("")

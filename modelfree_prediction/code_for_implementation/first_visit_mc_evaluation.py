@@ -39,7 +39,7 @@ def first_visit_mc(environment, iterations=10000, discount_rate=0.9, exploring_s
         for index_x, _ in enumerate(x):
             # all_action = [Action.UP, Action.RIGHT, Action.DOWN, Action.LEFT]
             state = (index_y, index_x)
-            dict_of_states[state] = {"action_value": [0, 0, 0, 0], "rewards": [0], "average": 0}
+            dict_of_states[state] = {"action_value": [0, 0, 0, 0], "rewards": [], "average": 0}
 
     # Loop forever (for each episode):
     #     Generate an episode following π: S0,A0,R1, S1,A1,R2, . . . , ST−1,AT−1,RT

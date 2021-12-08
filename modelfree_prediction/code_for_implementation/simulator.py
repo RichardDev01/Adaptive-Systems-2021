@@ -16,7 +16,9 @@ import os
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
         path = os.getcwd()
-        os.chdir('modelfree_prediction\code_for_implementation')
+        print(path)
+        if 'modelfree_prediction\code_for_implementation' not in path:
+            os.chdir('modelfree_prediction\code_for_implementation')
 
     # Creating environment
     policy_pr = PureRandomPolicy()
@@ -132,8 +134,8 @@ if __name__ == "__main__":
             # print(a3.policy.value_matrix)
 
             iterations = 50000
-            # discount_rate = 1
-            discount_rate = 0.9
+            discount_rate = 1
+            # discount_rate = 0.9
             exploring_starts = False
             epsilon = 0.7
             print(

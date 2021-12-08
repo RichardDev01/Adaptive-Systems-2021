@@ -120,12 +120,18 @@ def on_policy_first_visit_mc_control(environment,
             if not state_info in [x[0] for x in inverted_episode_log[index + 1:]]:
 
                 dict_of_states[step_info[0]]['rewards'][action_info].append(big_g)
-                dict_of_states[step_info[0]]['average'][action_info] = np.average(dict_of_states[state_info]['rewards'][action_info])
-                environment.agent.policy.q_table[state_info[0]][state_info[1]][action_info] = dict_of_states[step_info[0]]['average'][action_info]
+                dict_of_states[step_info[0]]['average'][action_info] = np.average(
+                    dict_of_states[state_info]['rewards'][action_info])
 
-                # A_star = (step_info[0], np.argmax(dict_of_states[step_info[0]]['average']))
-                # print(A_star)
+                A_star = (step_info[0], np.argmax(dict_of_states[step_info[0]]['average']))
 
-    # print(environment.agent.policy.q_table)
-    # return environment.agent.policy.value_matrix
+                for action_index, every_a in enumerate(dict_of_states[step_info[0]]['average']):
+                    if index == A_star[1]:
+                        dict_of_states[step_info[0]]['average'][action_index] = 1 - epsilon + epsilon * dict_of_states[step_info[0]]['average'][action_index]
+                    else:
+                        dict_of_states[step_info[0]]['average'][action_index] = epsilon * dict_of_states[step_info[0]]['average'][action_index]
+
+                environment.agent.policy.q_table[state_info[0]][state_info[1]][action_info] = \
+                    dict_of_states[step_info[0]]['average'][action_info]
+
     return environment.agent.policy.visualise_q_table()

@@ -29,8 +29,6 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
     :param epsilon: Parameter for E-soft policy
     :return: Value matrix of given policy in environment given
     """
-    value_matrix = copy.copy(environment.maze)
-
     q_table = [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] for x in np.zeros_like(environment.maze)]
     environment.agent.policy.q_table = q_table
 

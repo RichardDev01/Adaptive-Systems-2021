@@ -177,10 +177,10 @@ if __name__ == "__main__":
             print(
                 f"Q-Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
             print(q_learning(environment_eg,
-                                    iterations=iterations,
-                                    discount_rate=discount_rate,
-                                    alpha=alpha,
-                                    epsilon=epsilon,
-                                    exploring_starts=exploring_starts))
+                             iterations=iterations,
+                             discount_rate=discount_rate,
+                             alpha=alpha,
+                             epsilon=epsilon,
+                             exploring_starts=exploring_starts))
     except IndexError:
         print("")

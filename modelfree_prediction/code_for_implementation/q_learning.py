@@ -3,7 +3,7 @@ import copy
 import numpy as np
 
 
-def q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1, exploring_starts=False,epsilon=0.7):
+def q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1, exploring_starts=False, epsilon=0.7):
     """
     Q learning for policy control.
 

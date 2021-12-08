@@ -4,6 +4,7 @@ from maze import Maze
 from policy_random import PureRandomPolicy
 from policy_value_based import ValueBasedPolicy
 from policy_epsilon_soft_greedy import EpsilonSoftGreedyPolicy
+from policy_epsilon_soft_greedy_double_q import EpsilonSoftGreedyDoubleQPolicy
 from agent import Agent
 
 from first_visit_mc_evaluation import first_visit_mc
@@ -11,6 +12,7 @@ from temporal_difference_learning import tem_dif_ler
 from on_policy_first_visit_mc_control import on_policy_first_visit_mc_control
 from sarsa_on_policy_control import sarsa_tem_dif_ler
 from q_learning import q_learning
+from q_double_learning import double_q_learning
 
 import os
 
@@ -32,9 +34,13 @@ if __name__ == "__main__":
     policy_epsilon_greedy = EpsilonSoftGreedyPolicy()
     a3 = Agent(policy_epsilon_greedy)
 
+    policy_epsilon_greedy_double_q = EpsilonSoftGreedyDoubleQPolicy()
+    a4 = Agent(policy_epsilon_greedy_double_q)
+
     environment_pr = Maze(a1, visualize=False)
     environment_vb = Maze(a2, visualize=False)
     environment_eg = Maze(a3, visualize=False)
+    environment_egdq = Maze(a4, visualize=False)
 
     # print(os.getcwd())
     # Value function for value based policy
@@ -182,5 +188,24 @@ if __name__ == "__main__":
                              alpha=alpha,
                              epsilon=epsilon,
                              exploring_starts=exploring_starts))
+
+        if int(sys.argv[1]) == 5:
+            # Load optimal value matrix
+            a4.load_value_matrix('policy_saves/best_paths_custom.csv')
+            # print(a4.policy.value_matrix)
+            iterations = 1
+            discount_rate = 0.9
+            alpha = 0.1
+            epsilon = 0.7
+            exploring_starts = False
+            print(
+                f"DoubleQ-Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
+            print(double_q_learning(environment_egdq,
+                                    iterations=iterations,
+                                    discount_rate=discount_rate,
+                                    alpha=alpha,
+                                    epsilon=epsilon,
+                                    exploring_starts=exploring_starts))
+
     except IndexError:
         print("")

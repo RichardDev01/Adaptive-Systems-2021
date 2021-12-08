@@ -1,4 +1,4 @@
-"""Epsilon Soft greedy policy class."""
+"""Epsilon Soft greedy double Q policy class."""
 
 from policy import Policy
 from action import Action
@@ -11,12 +11,12 @@ from pathlib import Path
 textures_path = Path(__file__) / '..' / 'visualisation' / 'textures'
 
 
-class EpsilonSoftGreedyPolicy(Policy):
-    """Epsilon Soft greedy policy."""
+class EpsilonSoftGreedyDoubleQPolicy(Policy):
+    """Epsilon Soft greedy double Q policy."""
 
     def __init__(self, epsilon=0.7):
         """
-        Create Epsilon Soft greedy policy with parameters.
+        Create Epsilon Soft greedy double Q policy with parameters.
 
         :param epsilon: epsilon used in algorithm.
         """
@@ -36,7 +36,7 @@ class EpsilonSoftGreedyPolicy(Policy):
 
         if np.random.rand(1)[0] < self.epsilon:
             agent_pos = observation["agent_location"]
-            chosen_action = np.argmax([x[0]+x[1] for x in zip(self.q_table_1[agent_pos[0]][agent_pos[1]], self.q_table_2[agent_pos[0]][agent_pos[1]])])
+            chosen_action = np.argmax([x[0] + x[1] for x in zip(self.q_table_1[agent_pos[0]][agent_pos[1]], self.q_table_2[agent_pos[0]][agent_pos[1]])])
             # max_value = max(self.q_table[agent_pos[0]][agent_pos[1]])
             # index_action = self.q_table[agent_pos[0]][agent_pos[1]].index(max_value)
             # chosen_action = index_action

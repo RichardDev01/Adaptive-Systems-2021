@@ -46,7 +46,9 @@ def q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1, explo
             state_prime, reward, _, info = environment.step(action)
 
             # Q(S,A) ← Q(S,A) + α (R + γ maxa Q(S',A) - Q(S,A))
-            environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]][action] - environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
+            # max a Q(S',A)
+            q_max_value = np.argmax(environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]])
+            environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q_max_value] - environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
 
             # s ← S'
             state = state_prime

@@ -169,8 +169,8 @@ if __name__ == "__main__":
             # Load optimal value matrix
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
-            iterations = 10000
-            discount_rate = 1
+            iterations = 50000
+            discount_rate = 0.9
             alpha = 0.1
             epsilon = 0.7
             exploring_starts = False

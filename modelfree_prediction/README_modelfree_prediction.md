@@ -45,3 +45,6 @@ Use this from root folder to get the same results
 python modelfree_prediction/code_for_implementation/simulator.py 4
 ```
 
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_ql_discount_1_text.PNG?raw=true)
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_ql_discount_1.PNG?raw=true)
+

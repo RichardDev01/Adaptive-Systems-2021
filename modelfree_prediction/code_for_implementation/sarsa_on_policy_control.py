@@ -24,7 +24,7 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
     :param environment: Environment of the simulation contains the agent with policy
     :param iterations: Loop amount for creating episodes
     :param discount_rate: Discount value used in algorithm
-    :param alpha:
+    :param alpha: alpha used in algorithm
     :param exploring_starts: Enable or disable exploring starts
     :param epsilon: Parameter for E-soft policy
     :return: Value matrix of given policy in environment given

@@ -17,7 +17,7 @@ import os
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
         path = os.getcwd()
-        print(path)
+        # print(path)
         if 'modelfree_prediction\code_for_implementation' not in path:
             os.chdir('modelfree_prediction\code_for_implementation')
 
@@ -36,7 +36,7 @@ if __name__ == "__main__":
     environment_vb = Maze(a2, visualize=False)
     environment_eg = Maze(a3, visualize=False)
 
-    print(os.getcwd())
+    # print(os.getcwd())
     # Value function for value based policy
     a2.value_iteration()
     # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
@@ -169,7 +169,7 @@ if __name__ == "__main__":
             # Load optimal value matrix
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
-            iterations = 1
+            iterations = 10000
             discount_rate = 1
             alpha = 0.1
             epsilon = 0.7

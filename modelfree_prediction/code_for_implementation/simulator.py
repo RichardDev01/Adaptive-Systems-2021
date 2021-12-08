@@ -10,6 +10,7 @@ from first_visit_mc_evaluation import first_visit_mc
 from temporal_difference_learning import tem_dif_ler
 from on_policy_first_visit_mc_control import on_policy_first_visit_mc_control
 from sarsa_on_policy_control import sarsa_tem_dif_ler
+from q_learning import q_learning
 
 import os
 
@@ -150,7 +151,7 @@ if __name__ == "__main__":
             # Load optimal value matrix
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
-            iterations = 1
+            iterations = 10
             discount_rate = 1
             alpha = 0.1
             epsilon = 0.7
@@ -158,6 +159,24 @@ if __name__ == "__main__":
             print(
                 f"Sarsa control Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
             print(sarsa_tem_dif_ler(environment_eg,
+                                    iterations=iterations,
+                                    discount_rate=discount_rate,
+                                    alpha=alpha,
+                                    epsilon=epsilon,
+                                    exploring_starts=exploring_starts))
+
+        if int(sys.argv[1]) == 4:
+            # Load optimal value matrix
+            a3.load_value_matrix('policy_saves/best_paths_custom.csv')
+            # print(a3.policy.value_matrix)
+            iterations = 1
+            discount_rate = 1
+            alpha = 0.1
+            epsilon = 0.7
+            exploring_starts = False
+            print(
+                f"Q-Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
+            print(q_learning(environment_eg,
                                     iterations=iterations,
                                     discount_rate=discount_rate,
                                     alpha=alpha,

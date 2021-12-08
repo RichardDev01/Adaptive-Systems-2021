@@ -16,9 +16,9 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
         Choose A from S using policy derived from Q (e.g., ε-greedy)
             Loop for each step of episode:
             Take action A, observe R, S'
-        #     Choose A' from S' using policy derived from Q (e.g., ε-greedy)
-        #     Q(S,A) ← Q(S,A) + α (R + γQ(S',A') - Q(S,A))
-        #     S ← S'; A ← A'
+            Choose A' from S' using policy derived from Q (e.g., ε-greedy)
+            Q(S,A) ← Q(S,A) + α (R + γQ(S',A') - Q(S,A))
+            S ← S'; A ← A'
         until s is terminal
 
     :param environment: Environment of the simulation contains the agent with policy

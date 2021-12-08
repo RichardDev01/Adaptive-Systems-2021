@@ -65,15 +65,19 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
 
         off_set_text = [(-40, 0), (0, 40), (40, 0), (0, -40)]
 
-        for height_row, width_values in enumerate(self.q_table):
+        for height_row, width_values in enumerate(self.q_table_1):
             for index, q_values in enumerate(width_values):
                 for index_v, value in enumerate(q_values):
+                    # chosen_action = np.argmax([x[0] + x[1] for x in zip(self.q_table_1[agent_pos[0]][agent_pos[1]],
+                    #                                                     self.q_table_2[agent_pos[0]][agent_pos[1]])])
+                    value += self.q_table_2[height_row][index][index_v]
+
                     #             print(value)
                     ImageDraw.Draw(background).text(
                         (height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1],
                          index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0]),
                         f"{round(value, 2)}", fill=(255, 0, 0, 255))
-                direction = np.argmax(q_values)
+                direction = np.argmax([x[0] + x[1] for x in zip(self.q_table_2[height_row][index], q_values)])
                 ImageDraw.Draw(background).text(
                     (height_row * tile_size_height + tile_size_height / 2 + off_set_text[direction][1],
                      index * tile_size_width + tile_size_width / 2.5 + off_set_text[direction][0]),
@@ -84,4 +88,3 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-        return self.q_table

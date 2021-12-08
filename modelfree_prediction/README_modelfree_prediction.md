@@ -56,3 +56,9 @@ Use this from root folder to get the same results
 ```bash
 python modelfree_prediction/code_for_implementation/simulator.py 5
 ```
+
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_dql_discount_1_text.PNG?raw=true)
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_dql_discount_1.PNG?raw=true)
+
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_dql_discount_09_text.PNG?raw=true)
+![Alt Text](https://github.com/RichardDev01/Adaptive-Systems-2021/blob/main/assets/outcome_qtable_dql_discount_09.PNG?raw=true)

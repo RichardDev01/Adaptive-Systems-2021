@@ -147,19 +147,21 @@ if __name__ == "__main__":
                                                    epsilon=epsilon))
 
         if int(sys.argv[1]) == 3:
-            iterations = 10000
+            # Load optimal value matrix
+            a3.load_value_matrix('policy_saves/best_paths_custom.csv')
+            # print(a3.policy.value_matrix)
+            iterations = 1
             discount_rate = 1
             alpha = 0.1
             epsilon = 0.7
-            exploring_starts = True
+            exploring_starts = False
             print(
-                f"Value based poly Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
-            print(sarsa_tem_dif_ler(environment_vb,
+                f"Sarsa control Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
+            print(sarsa_tem_dif_ler(environment_eg,
                                     iterations=iterations,
                                     discount_rate=discount_rate,
                                     alpha=alpha,
                                     epsilon=epsilon,
                                     exploring_starts=exploring_starts))
-            "SARSA"
     except IndexError:
         print("")

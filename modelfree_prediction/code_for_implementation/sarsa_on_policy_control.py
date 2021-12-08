@@ -1,5 +1,6 @@
 """Sarsa on policy Temporal Difference control."""
 import copy
+import numpy as np
 
 
 def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1, exploring_starts=False, epsilon=0.7):
@@ -15,9 +16,9 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
         Choose A from S using policy derived from Q (e.g., ε-greedy)
             Loop for each step of episode:
             Take action A, observe R, S'
-            Choose A' from S' using policy derived from Q (e.g., ε-greedy)
-            Q(S,A) ← Q(S,A) + α (R + γQ(S',A') - Q(S,A))
-            S ← S'; A ← A'
+        #     Choose A' from S' using policy derived from Q (e.g., ε-greedy)
+        #     Q(S,A) ← Q(S,A) + α (R + γQ(S',A') - Q(S,A))
+        #     S ← S'; A ← A'
         until s is terminal
 
     :param environment: Environment of the simulation contains the agent with policy
@@ -30,24 +31,61 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
     """
     value_matrix = copy.copy(environment.maze)
 
+    q_table = [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] for x in np.zeros_like(environment.maze)]
+    environment.agent.policy.q_table = q_table
+
+    translate_action_to_coord = {0: (-1, 0),
+                                 1: (0, 1),
+                                 2: (1, 0),
+                                 3: (0, -1),
+                                 4: (0, 0)}
+
     for i in range(iterations):
         environment.reset(random_start=exploring_starts)
         total_reward = 0
-        observation = environment.get_state()
+
+        # Initialize S
+        state = environment.get_state()
+        # Choose A from S using policy derived from Q (e.g., ε-greedy)
+        action = environment.agent.get_action_from_policy(state)
 
         while not environment.done:
-            # Decide an action according to the observation
-            action = environment.agent.get_action_from_policy(observation)
-            # Take action in the world
-            last_observation = observation
-            observation, reward, _, info = environment.step(action)
-            # print(f"{observation['agent_location']=}\n{reward}")
-            # Counting reward
+
+            last_state = state
+            # Take action A, observe R, S'
+            state_prime, reward, _, _ = environment.step(action)
+
+            # Choose A' from S' using policy derived from Q (e.g., ε-greedy)
+            # state_prime = observation
+            action_prime = environment.agent.get_action_from_policy(state_prime)
+
+            # Get Q_value for prime state
+            action_coord_delta_y, action_coord_delta_x = translate_action_to_coord[action]
+            next_y = state_prime['agent_location'][0] + action_coord_delta_y
+            next_x = state_prime['agent_location'][1] + action_coord_delta_x
+            print(f"{state=}\t{action_prime=}\t")
+
+            # Check if next action is possible in the maze
+            if 0 <= next_y <= environment.maze.shape[1] - 1 and 0 <= next_x <= environment.maze.shape[0] - 1:
+                state_prime['agent_location'] = (next_y, next_x)
+
+            # q_value_from_prime_state = environment.agent.policy.q_table[(next_y, next_x)]
+            q_value_from_prime_state = environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]]
+            # print(f"{q_value_from_prime_state=}")
+
+            q_value_from_state = environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]]
+            # print(f"{q_value_from_state=}")
+
+            # Q(S,A) ← Q(S,A) + α (R + γQ(S',A') - Q(S,A))
+            environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]] = q_value_from_state + alpha * (reward + discount_rate * q_value_from_prime_state - q_value_from_state)
+
             total_reward += reward
 
-            v_state = value_matrix[last_observation['agent_location']]
-            v_state_prime = value_matrix[observation['agent_location']]
-            value_matrix[last_observation['agent_location']] = round(v_state + alpha * (reward + discount_rate * v_state_prime - v_state), 2)
-
+            # S ← S'; A ← A'
+            state = state_prime
+            action = action_prime
+            # print(f"{state=}")
         # print(f"{total_reward=}")
-    return value_matrix
+        #     print("loop")
+        print(environment.agent.policy.q_table)
+    return environment.agent.policy.visualise_q_table()

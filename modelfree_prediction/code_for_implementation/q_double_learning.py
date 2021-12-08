@@ -60,11 +60,11 @@ def double_q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1
         # max a Q2(S',A)
             q2_max_value = np.argmax(environment.agent.policy.q_table_2[state_prime['agent_location'][0]][state_prime['agent_location'][1]])
             if np.random.rand(1)[0] < 0.5:
-        #     Q1(S,A) ← Q1(S,A) + α (R + γ Q2(S', maxa Q1(S',A)) - Q1(S,A))
+                # Q1(S,A) ← Q1(S,A) + α (R + γ Q2(S', maxa Q1(S',A)) - Q1(S,A))
                 environment.agent.policy.q_table_1[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table_2[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q1_max_value] - environment.agent.policy.q_table_1[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
 
             else:
-        #     Q2(S,A) ← Q2(S,A) + α (R + γ Q1(S', maxa Q2(S',A)) - Q2(S,A))
+                # Q2(S,A) ← Q2(S,A) + α (R + γ Q1(S', maxa Q2(S',A)) - Q2(S,A))
                 environment.agent.policy.q_table_2[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table_1[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q2_max_value] - environment.agent.policy.q_table_2[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
 
         #     # s ← S'

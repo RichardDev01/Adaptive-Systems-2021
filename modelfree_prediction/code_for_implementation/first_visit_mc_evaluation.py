@@ -5,7 +5,7 @@ import numpy as np
 
 def first_visit_mc(environment, iterations=10000, discount_rate=0.9, exploring_starts=False):
     """
-    Monte Carlo methods for learning the state-value function for a given policy.
+    First Monte Carlo methods for learning the state-value function for a given policy.
 
     Pseudo Code
     Input: a policy π to be evaluated
@@ -74,30 +74,31 @@ def first_visit_mc(environment, iterations=10000, discount_rate=0.9, exploring_s
         episodes_dict[i].append([total_reward, environment.sim_step])
 
         # G ← 0
-        # Loop for each step of episode, t = T −1, T −2, . . . , 0:
-        #     G ← γG + Rt+1
-        #     Unless St appears in S0, S1, . . . , St−1:
-        #         Append G to Returns(St)
-        #         V (St) ← average(Returns(St))
         big_g = 0
+
+        # Loop for each step of episode, t = T −1, T −2, . . . , 0:
         inverted_episode_log = episode_log[::-1][1:]
         for index, step_info in enumerate(inverted_episode_log):
+            # Step info[0] = State
+            # Step info[1] = Action
+            # Step info[2] = Reward
+            # G ← γG + Rt+1
             big_g = discount_rate * big_g + step_info[2]
+            # Unless St appears in S0, S1, . . . , St−1:
             if not step_info[0] in [x[0] for x in inverted_episode_log[index + 1:]]:
+                # Append G to Returns(St)
                 dict_of_states[step_info[0]]['rewards'].append(big_g)
+                # V (St) ← average(Returns(St))
                 dict_of_states[step_info[0]]['average'] = np.average(dict_of_states[step_info[0]]['rewards'])
 
                 # Incremental Implementation # TODO it is not working
                 # Qn+1  = NewEstimate OldEstimate + StepSize (Target - oldestimate)
-
                 """
-
                 old_estimate = dict_of_states[step_info[0]]['average']
                 step_size = 1 / (index + 1)
                 target = step_info[2]
 
                 dict_of_states[step_info[0]]['average'] = old_estimate + (step_size * (target - old_estimate))
-
                 """
 
         value_matrix = copy.copy(environment.maze)

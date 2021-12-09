@@ -141,10 +141,10 @@ if __name__ == "__main__":
             # print(a3.policy.value_matrix)
 
             iterations = 10000
-            discount_rate = 1
-            # discount_rate = 0.9
-            exploring_starts = False
-            epsilon = 0.7
+            # discount_rate = 1
+            discount_rate = 0.9
+            exploring_starts = True
+            epsilon = 0.9
             print(
                 f"on policy control e soft greedy policy\n{iterations=}\t{discount_rate=}\t\t{exploring_starts=}\t{epsilon=}\nOutcome\n")
             print(on_policy_first_visit_mc_control(environment_eg,

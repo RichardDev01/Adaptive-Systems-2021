@@ -26,7 +26,7 @@ class EpsilonSoftGreedyPolicy(Policy):
 
     def decide_action(self, observation):
         """
-        Decide action based on pure random. #todo
+        Decide action with highest value in q-table with a Epsilon change to take a random action.
 
         :param observation: observation is a dict containing information about the environment
         :return: Action chosen based on the observation
@@ -40,31 +40,10 @@ class EpsilonSoftGreedyPolicy(Policy):
             chosen_action = index_action
             return chosen_action
         else:
-            # print("random")
             return np.random.choice(all_actions)
 
     def visualise_q_table(self):
         """Visualise q table to img."""
-        # print(self.q_table)
-        # action_to_string_dict = {0: 'up',
-        #                          1: 'right',
-        #                          2: 'down',
-        #                          3: 'left', }
-        #
-        # new_matrix = np.zeros_like(self.value_matrix)
-        # for index_y, y in enumerate(self.q_table):
-        #     for index_x, x in enumerate(y):
-        #         # print(np.argmax(x))
-        #         new_matrix[index_y, index_x] = np.argmax(x)
-        #
-        # # print(new_matrix)
-        #
-        # translated_matrix = np.zeros_like(new_matrix, dtype=str)
-        # for index_y, y in enumerate(self.q_table):
-        #     for index_x, x in enumerate(y):
-        #         # print(np.argmax(x))
-        #         translated_matrix[index_y, index_x] = action_to_string_dict[np.argmax(x)]
-
         triangles = Image.open(textures_path / "baground_tiles_for_q.png")
 
         tile_size_width, tile_size_height = triangles.size

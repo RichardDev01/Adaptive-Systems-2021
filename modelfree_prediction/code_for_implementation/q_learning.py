@@ -28,6 +28,7 @@ def q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1, explo
     :param epsilon: Parameter for E-soft policy
     :return: Value matrix of given policy in environment given
     """
+    # Initialize Q(s,a), for all s ∈ S+,a ∈ A(s), arbitrarily except that V (terminal, *) = 0
     q_table = [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] for x in np.zeros_like(environment.maze)]
     environment.agent.policy.q_table = q_table
     environment.agent.policy.epsilon = epsilon

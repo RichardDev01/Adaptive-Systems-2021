@@ -5,7 +5,7 @@ from action import Action
 
 
 class ValueBasedPolicy(Policy):
-    """Pure random policy is a policy that takes action on a pure random base."""
+    """Value based policy on model based predeictions."""
 
     def __init__(self, gamma=1, visuals=False):
         """
@@ -22,7 +22,7 @@ class ValueBasedPolicy(Policy):
 
     def decide_action(self, observation):
         """
-        Decide action based on pure random.
+        Decide action based on best possible action with a model based prediction.
 
         :param observation: observation is a dict containing information about the environment
         :return: Action chosen based on the observation

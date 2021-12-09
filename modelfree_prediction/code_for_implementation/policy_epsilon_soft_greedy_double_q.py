@@ -27,7 +27,7 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
 
     def decide_action(self, observation):
         """
-        Decide action based on pure random.
+        Decide action with highest value in q-table with a Epsilon change to take a random action.
 
         :param observation: observation is a dict containing information about the environment
         :return: Action chosen based on the observation
@@ -39,7 +39,6 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
             chosen_action = np.argmax([x[0] + x[1] for x in zip(self.q_table_1[agent_pos[0]][agent_pos[1]], self.q_table_2[agent_pos[0]][agent_pos[1]])])
             return chosen_action
         else:
-            # print("random")
             return np.random.choice(all_actions)
 
     def visualise_q_table(self):
@@ -57,8 +56,6 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
         for height_row, width_values in enumerate(maze):
             for index, value in enumerate(width_values):
                 background.paste(triangles, (index * tile_size_width, height_row * tile_size_height), triangles)
-
-        # copy_background = background.copy()
 
         off_set_text = [(0, -40), (40, 0), (0, 40), (-40, 0)]
 

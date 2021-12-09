@@ -161,7 +161,7 @@ if __name__ == "__main__":
             discount_rate = 1
             alpha = 0.1
             epsilon = 0.7
-            exploring_starts = False
+            exploring_starts = True
             print(
                 f"Sarsa control Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
             print(sarsa_tem_dif_ler(environment_eg,
@@ -176,7 +176,8 @@ if __name__ == "__main__":
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
             iterations = 50000
-            discount_rate = 0.9
+            discount_rate = 1
+            # discount_rate = 0.9
             alpha = 0.1
             epsilon = 0.9
             exploring_starts = True
@@ -194,6 +195,7 @@ if __name__ == "__main__":
             a4.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a4.policy.value_matrix)
             iterations = 50000
+            # discount_rate = 1
             discount_rate = 0.9
             alpha = 0.1
             epsilon = 0.9

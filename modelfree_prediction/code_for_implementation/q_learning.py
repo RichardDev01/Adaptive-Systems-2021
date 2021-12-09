@@ -1,5 +1,4 @@
 """Q Learning Learning."""
-import copy
 import numpy as np
 
 
@@ -42,15 +41,14 @@ def q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1, explo
             # Choose A from S using policy derived from Q (e.g., ε-greedy)
             action = environment.agent.get_action_from_policy(state)
 
-            last_state = state
-
             # Take action A, observe R, S'
             state_prime, reward, _, info = environment.step(action)
 
             # Q(S,A) ← Q(S,A) + α (R + γ maxa Q(S',A) - Q(S,A))
-            # max a Q(S',A)
+            # max a                                          Q       (           State_prime                                        ,A)
             q_max_value = np.argmax(environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]])
-            environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q_max_value] - environment.agent.policy.q_table[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
+            #                            Q  ([                           State                     ],Action) +     α    (R      +       γ                            Q            ([                            S'                                ], maxa Q1(S',A)) -                         Q       (              State                                    ],A))
+            environment.agent.policy.q_table[state['agent_location'][0]][state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q_max_value] - environment.agent.policy.q_table[state['agent_location'][0]][state['agent_location'][1]][action])
 
             # s ← S'
             state = state_prime

@@ -48,8 +48,6 @@ def double_q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1
             # Choose A from S using policy derived from Q (e.g., ε-greedy)
             action = environment.agent.get_action_from_policy(state)
 
-            last_state = state
-
             # Take action A, observe R, S'
             state_prime, reward, _, info = environment.step(action)
 
@@ -61,12 +59,15 @@ def double_q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1
 
             # With 0.5 probability:
             if np.random.rand(1)[0] < 0.5:
+                # Take note that this Q table is a 3D list and it takes 3 index to get to the action value
                 # Q1(S,A) ← Q1(S,A) + α (R + γ Q2(S', maxa Q1(S',A)) - Q1(S,A))
-                environment.agent.policy.q_table_1[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table_2[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q1_max_value] - environment.agent.policy.q_table_1[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
+                #                            Q1  ([                           State                                ],Action) +     α    (R      +       γ                            Q2        ([                            S'                          ],maxa Q1(S',A)) -                         Q1       (              State                                    ],A))
+                environment.agent.policy.q_table_1[state['agent_location'][0]][state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table_2[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q1_max_value] - environment.agent.policy.q_table_1[state['agent_location'][0]][state['agent_location'][1]][action])
 
             else:
                 # Q2(S,A) ← Q2(S,A) + α (R + γ Q1(S', maxa Q2(S',A)) - Q2(S,A))
-                environment.agent.policy.q_table_2[last_state['agent_location'][0]][last_state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table_1[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q2_max_value] - environment.agent.policy.q_table_2[last_state['agent_location'][0]][last_state['agent_location'][1]][action])
+                #                            Q2  ([                           State                                ],Action) +     α    (R      +       γ                           Q1        ([                            S'                           ],maxa Q2(S',A)) -                         Q2       (              State                                    ],A))
+                environment.agent.policy.q_table_2[state['agent_location'][0]][state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table_1[state_prime['agent_location'][0]][state_prime['agent_location'][1]][q2_max_value] - environment.agent.policy.q_table_2[state['agent_location'][0]][state['agent_location'][1]][action])
 
             # s ← S'
             state = state_prime

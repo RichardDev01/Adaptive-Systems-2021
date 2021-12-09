@@ -17,7 +17,7 @@ def tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1, expl
         A ← action given by π for S
         Take action A, observe R, S'
         V(S) ← V(S) + α * (R + γV(s') - V(S))
-        s ← S'
+        # s ← S'
     until s is terminal
 
     :param environment: Environment of the simulation contains the agent with policy
@@ -34,22 +34,21 @@ def tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1, expl
     for i in range(iterations):
         environment.reset(random_start=exploring_starts)
         # Initialize S
-        observation = environment.get_state()
+        state = environment.get_state()
 
         while not environment.done:
             # A ← action given by π for S
-            action = environment.agent.get_action_from_policy(observation)
-
-            last_observation = observation
+            action = environment.agent.get_action_from_policy(state)
 
             # Take action A, observe R, S'
-            observation, reward, _, _ = environment.step(action)
+            state_prime, reward, _, _ = environment.step(action)
 
-            v_state = value_matrix[last_observation['agent_location']]
-            v_state_prime = value_matrix[observation['agent_location']]
+            v_state = value_matrix[state['agent_location']]
+            v_state_prime = value_matrix[state_prime['agent_location']]
 
             # V(S) ← V(S) + α * (R + γV(s') - V(S))
-            value_matrix[last_observation['agent_location']] = round(v_state + alpha * (reward + discount_rate * v_state_prime - v_state), 2)
-
+            value_matrix[state['agent_location']] = round(v_state + alpha * (reward + discount_rate * v_state_prime - v_state), 2)
+            # s ← S'
+            state = state_prime
         # print(f"{total_reward=}")
     return value_matrix

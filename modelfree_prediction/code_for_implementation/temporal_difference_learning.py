@@ -27,25 +27,28 @@ def tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1, expl
     :param exploring_starts: Enable or disable exploring starts
     :return: Value matrix of given policy in environment given
     """
+    # Initialize V(s), for all s ∈ S+, arbitrarily except that V (terminal) = 0
     value_matrix = copy.copy(environment.maze)
 
+    # Loop for each step of episode
     for i in range(iterations):
         environment.reset(random_start=exploring_starts)
-        total_reward = 0
+        # Initialize S
         observation = environment.get_state()
 
         while not environment.done:
-            # Decide an action according to the observation
+            # A ← action given by π for S
             action = environment.agent.get_action_from_policy(observation)
-            # Take action in the world
+
             last_observation = observation
-            observation, reward, _, info = environment.step(action)
-            # print(f"{observation['agent_location']=}\n{reward}")
-            # Counting reward
-            total_reward += reward
+
+            # Take action A, observe R, S'
+            observation, reward, _, _ = environment.step(action)
 
             v_state = value_matrix[last_observation['agent_location']]
             v_state_prime = value_matrix[observation['agent_location']]
+
+            # V(S) ← V(S) + α * (R + γV(s') - V(S))
             value_matrix[last_observation['agent_location']] = round(v_state + alpha * (reward + discount_rate * v_state_prime - v_state), 2)
 
         # print(f"{total_reward=}")

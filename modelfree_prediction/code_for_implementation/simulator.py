@@ -42,21 +42,19 @@ if __name__ == "__main__":
     environment_eg = Maze(a3, visualize=False)
     environment_egdq = Maze(a4, visualize=False)
 
-    # print(os.getcwd())
-    # Value function for value based policy
-    a2.value_iteration()
-    # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
-    # print(a2.policy.value_matrix)
-
-    # Load optimal value matrix
-    a2.load_value_matrix('policy_saves/value_iteration_matrix.csv')
-    # print(a2.policy.value_matrix)
-
     # Creating variables that keep track of the simulation
     done = False
     total_reward = 0
     try:
         if int(sys.argv[1]) == 0:
+            # Value function for value based policy
+            a2.value_iteration()
+            # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
+
+            # Load optimal value matrix
+            a2.load_value_matrix('policy_saves/value_iteration_matrix.csv')
+            # print(a2.policy.value_matrix)
+
             iterations = 10000
             discount_rate = 1
             exploring_starts = True
@@ -95,6 +93,14 @@ if __name__ == "__main__":
                                  exploring_starts=exploring_starts), "\n")
 
         if int(sys.argv[1]) == 1:
+            # Value function for value based policy
+            a2.value_iteration()
+            # a2.save_value_matrix('policy_saves/value_iteration_matrix.csv')
+
+            # Load optimal value matrix
+            a2.load_value_matrix('policy_saves/value_iteration_matrix.csv')
+            # print(a2.policy.value_matrix)
+
             iterations = 10000
             discount_rate = 1
             alpha = 0.1
@@ -136,10 +142,6 @@ if __name__ == "__main__":
                               exploring_starts=exploring_starts))
 
         if int(sys.argv[1]) == 2:
-            # Load optimal value matrix
-            a3.load_value_matrix('policy_saves/best_paths_custom.csv')
-            # print(a3.policy.value_matrix)
-
             iterations = 10000
             # discount_rate = 1
             discount_rate = 0.9
@@ -154,9 +156,6 @@ if __name__ == "__main__":
                                                    epsilon=epsilon))
 
         if int(sys.argv[1]) == 3:
-            # Load optimal value matrix
-            a3.load_value_matrix('policy_saves/best_paths_custom.csv')
-            # print(a3.policy.value_matrix)
             iterations = 10000
             # discount_rate = 1
             discount_rate = 0.9
@@ -173,9 +172,6 @@ if __name__ == "__main__":
                                     exploring_starts=exploring_starts))
 
         if int(sys.argv[1]) == 4:
-            # Load optimal value matrix
-            a3.load_value_matrix('policy_saves/best_paths_custom.csv')
-            # print(a3.policy.value_matrix)
             iterations = 50000
             discount_rate = 1
             # discount_rate = 0.9
@@ -192,9 +188,6 @@ if __name__ == "__main__":
                              exploring_starts=exploring_starts))
 
         if int(sys.argv[1]) == 5:
-            # Load optimal value matrix
-            a4.load_value_matrix('policy_saves/best_paths_custom.csv')
-            # print(a4.policy.value_matrix)
             iterations = 50000
             # discount_rate = 1
             discount_rate = 0.9

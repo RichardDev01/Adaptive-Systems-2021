@@ -1,5 +1,4 @@
 """Sarsa on policy Temporal Difference control."""
-import copy
 import numpy as np
 
 
@@ -29,15 +28,9 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
     :param epsilon: Parameter for E-soft policy
     :return: Value matrix of given policy in environment given
     """
-    q_table = [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] for x in np.zeros_like(environment.maze)]
+    q_table = [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] for _ in np.zeros_like(environment.maze)]
     environment.agent.policy.q_table = q_table
     environment.agent.policy.epsilon = epsilon
-
-    translate_action_to_coord = {0: (-1, 0),
-                                 1: (0, 1),
-                                 2: (1, 0),
-                                 3: (0, -1),
-                                 4: (0, 0)}
 
     for i in range(iterations):
         environment.reset(random_start=exploring_starts)
@@ -49,16 +42,14 @@ def sarsa_tem_dif_ler(environment, iterations=1000, discount_rate=0.9, alpha=0.1
         action = environment.agent.get_action_from_policy(state)
 
         while not environment.done:
-
-            # last_state = state
             # Take action A, observe R, S'
             state_prime, reward, _, _ = environment.step(action)
 
             # Choose A' from S' using policy derived from Q (e.g., ε-greedy)
-            # state_prime = observation
             action_prime = environment.agent.get_action_from_policy(state_prime)
 
             # Q(S,A) ← Q(S,A) + α (R + γQ(S',A') - Q(S,A))
+            # Q(S,A)        ←  Q             (                 S                                    ,A)       +   α     (    R  + γ                                        Q       (                            S'                                    ,A'          ) -                           Q      (                            S                          ,A))
             environment.agent.policy.q_table[state['agent_location'][0]][state['agent_location'][1]][action] += alpha * (reward + discount_rate * environment.agent.policy.q_table[state_prime['agent_location'][0]][state_prime['agent_location'][1]][action_prime] - environment.agent.policy.q_table[state['agent_location'][0]][state['agent_location'][1]][action])
 
             total_reward += reward

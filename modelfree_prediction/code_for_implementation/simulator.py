@@ -140,7 +140,7 @@ if __name__ == "__main__":
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
 
-            iterations = 50000
+            iterations = 10000
             discount_rate = 1
             # discount_rate = 0.9
             exploring_starts = False
@@ -178,8 +178,8 @@ if __name__ == "__main__":
             iterations = 50000
             discount_rate = 0.9
             alpha = 0.1
-            epsilon = 0.7
-            exploring_starts = False
+            epsilon = 0.9
+            exploring_starts = True
             print(
                 f"Q-Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
             print(q_learning(environment_eg,
@@ -193,11 +193,11 @@ if __name__ == "__main__":
             # Load optimal value matrix
             a4.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a4.policy.value_matrix)
-            iterations = 150000
+            iterations = 50000
             discount_rate = 0.9
             alpha = 0.1
-            epsilon = 0.7
-            exploring_starts = False
+            epsilon = 0.9
+            exploring_starts = True
             print(
                 f"DoubleQ-Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
             print(double_q_learning(environment_egdq,

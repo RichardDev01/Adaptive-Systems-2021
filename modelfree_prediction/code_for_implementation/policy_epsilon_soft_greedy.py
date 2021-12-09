@@ -14,7 +14,7 @@ textures_path = Path(__file__) / '..' / 'visualisation' / 'textures'
 class EpsilonSoftGreedyPolicy(Policy):
     """Epsilon Soft greedy policy."""
 
-    def __init__(self, epsilon=0.7):
+    def __init__(self, epsilon=0.9):
         """
         Create Epsilon Soft greedy policy with parameters.
 
@@ -26,12 +26,12 @@ class EpsilonSoftGreedyPolicy(Policy):
 
     def decide_action(self, observation):
         """
-        Decide action based on pure random.
+        Decide action based on pure random. #todo
 
         :param observation: observation is a dict containing information about the environment
         :return: Action chosen based on the observation
         """
-        all_actions = [Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT]
+        all_actions = [Action.UP, Action.RIGHT, Action.DOWN, Action.LEFT]
 
         if np.random.rand(1)[0] < self.epsilon:
             agent_pos = observation["agent_location"]
@@ -81,20 +81,24 @@ class EpsilonSoftGreedyPolicy(Policy):
 
         # copy_background = background.copy()
 
-        off_set_text = [(-40, 0), (0, 40), (40, 0), (0, -40)]
+        off_set_text = [(0, -40), (40, 0), (0, 40), (-40, 0)]
 
         for height_row, width_values in enumerate(self.q_table):
             for index, q_values in enumerate(width_values):
                 for index_v, value in enumerate(q_values):
                     #             print(value)
                     ImageDraw.Draw(background).text(
-                        (height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1],
-                         index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0]),
+                        (index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0],
+                         height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1]),
+                        # (height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1],
+                        #  index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0]),
                         f"{round(value, 2)}", fill=(255, 0, 0, 255))
                 direction = np.argmax(q_values)
                 ImageDraw.Draw(background).text(
-                    (height_row * tile_size_height + tile_size_height / 2 + off_set_text[direction][1],
-                     index * tile_size_width + tile_size_width / 2.5 + off_set_text[direction][0]),
+                    (index * tile_size_width + tile_size_width / 2 + off_set_text[direction][0],
+                     height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[direction][1]),
+                    # (height_row * tile_size_height + tile_size_height / 2 + off_set_text[direction][1],
+                    #  index * tile_size_width + tile_size_width / 2.5 + off_set_text[direction][0]),
                     "\n|=|", fill=(255, 0, 0, 255))
 
         cv2.imshow('Q-table visualised', cv2.cvtColor(np.array(background), cv2.COLOR_BGR2RGB))

@@ -30,6 +30,7 @@ def q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1, explo
     """
     q_table = [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] for x in np.zeros_like(environment.maze)]
     environment.agent.policy.q_table = q_table
+    environment.agent.policy.epsilon = epsilon
 
     for i in range(iterations):
         # Initialize S

@@ -36,6 +36,8 @@ def double_q_learning(environment, iterations=1000, discount_rate=0.9, alpha=0.1
     environment.agent.policy.q_table_1 = q_table_1
     environment.agent.policy.q_table_2 = q_table_2
 
+    environment.agent.policy.epsilon = epsilon
+
     for i in range(iterations):
         # Initialize S
         environment.reset(random_start=exploring_starts)

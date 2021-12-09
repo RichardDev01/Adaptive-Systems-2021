@@ -14,7 +14,7 @@ textures_path = Path(__file__) / '..' / 'visualisation' / 'textures'
 class EpsilonSoftGreedyDoubleQPolicy(Policy):
     """Epsilon Soft greedy double Q policy."""
 
-    def __init__(self, epsilon=0.7):
+    def __init__(self, epsilon=0.9):
         """
         Create Epsilon Soft greedy double Q policy with parameters.
 
@@ -32,14 +32,11 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
         :param observation: observation is a dict containing information about the environment
         :return: Action chosen based on the observation
         """
-        all_actions = [Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT]
+        all_actions = [Action.UP, Action.RIGHT, Action.DOWN, Action.LEFT]
 
         if np.random.rand(1)[0] < self.epsilon:
             agent_pos = observation["agent_location"]
             chosen_action = np.argmax([x[0] + x[1] for x in zip(self.q_table_1[agent_pos[0]][agent_pos[1]], self.q_table_2[agent_pos[0]][agent_pos[1]])])
-            # max_value = max(self.q_table[agent_pos[0]][agent_pos[1]])
-            # index_action = self.q_table[agent_pos[0]][agent_pos[1]].index(max_value)
-            # chosen_action = index_action
             return chosen_action
         else:
             # print("random")
@@ -63,7 +60,7 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
 
         # copy_background = background.copy()
 
-        off_set_text = [(-40, 0), (0, 40), (40, 0), (0, -40)]
+        off_set_text = [(0, -40), (40, 0), (0, 40), (-40, 0)]
 
         for height_row, width_values in enumerate(self.q_table_1):
             for index, q_values in enumerate(width_values):
@@ -74,13 +71,17 @@ class EpsilonSoftGreedyDoubleQPolicy(Policy):
 
                     #             print(value)
                     ImageDraw.Draw(background).text(
-                        (height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1],
-                         index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0]),
+                        (index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0],
+                         height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1]),
+                        # (height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[index_v][1],
+                        #  index * tile_size_width + tile_size_width / 2.5 + off_set_text[index_v][0]),
                         f"{round(value, 2)}", fill=(255, 0, 0, 255))
                 direction = np.argmax([x[0] + x[1] for x in zip(self.q_table_2[height_row][index], q_values)])
                 ImageDraw.Draw(background).text(
-                    (height_row * tile_size_height + tile_size_height / 2 + off_set_text[direction][1],
-                     index * tile_size_width + tile_size_width / 2.5 + off_set_text[direction][0]),
+                    (index * tile_size_width + tile_size_width / 2 + off_set_text[direction][0],
+                     height_row * tile_size_height + tile_size_height / 2.5 + off_set_text[direction][1]),
+                    # (height_row * tile_size_height + tile_size_height / 2 + off_set_text[direction][1],
+                    #  index * tile_size_width + tile_size_width / 2.5 + off_set_text[direction][0]),
                     "\n|=|", fill=(255, 0, 0, 255))
 
         cv2.imshow('Q-table visualised', cv2.cvtColor(np.array(background), cv2.COLOR_BGR2RGB))

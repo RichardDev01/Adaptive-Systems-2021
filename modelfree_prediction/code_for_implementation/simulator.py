@@ -157,10 +157,11 @@ if __name__ == "__main__":
             # Load optimal value matrix
             a3.load_value_matrix('policy_saves/best_paths_custom.csv')
             # print(a3.policy.value_matrix)
-            iterations = 10
-            discount_rate = 1
+            iterations = 10000
+            # discount_rate = 1
+            discount_rate = 0.9
             alpha = 0.1
-            epsilon = 0.7
+            epsilon = 0.9
             exploring_starts = True
             print(
                 f"Sarsa control Temporal Difference Learning\n{iterations=}\t{discount_rate=}\t{alpha=}\t{epsilon=}\t{exploring_starts=}\nOutcome\n")
